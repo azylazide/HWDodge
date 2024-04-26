@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=13 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://src/player/states/playerstatemachine.gd" id="3_xkvhd"]
 [ext_resource type="Script" path="res://src/player/states/player_idle.gd" id="4_0tjwk"]
 [ext_resource type="Script" path="res://src/player/states/player_fall.gd" id="6_hfu8q"]
+[ext_resource type="Script" path="res://src/player/states/player_run.gd" id="7_rq3b3"]
+[ext_resource type="Script" path="res://src/player/states/player_jump.gd" id="8_oupxc"]
 
 [sub_resource type="Resource" id="Resource_583a7"]
 script = ExtResource("2_oamd2")
@@ -60,13 +62,27 @@ script = ExtResource("3_xkvhd")
 pawn = NodePath("../..")
 initial_state = NodePath("PlayerIdle")
 
-[node name="PlayerIdle" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall")]
+[node name="PlayerIdle" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("run", "jump", "fall")]
 script = ExtResource("4_0tjwk")
+run = NodePath("../PlayerRun")
+jump = NodePath("../PlayerJump")
 fall = NodePath("../PlayerFall")
 
-[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle")]
+[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "jump")]
 script = ExtResource("6_hfu8q")
 idle = NodePath("../PlayerIdle")
+run = NodePath("../PlayerRun")
+jump = NodePath("../PlayerJump")
+
+[node name="PlayerRun" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "jump", "fall")]
+script = ExtResource("7_rq3b3")
+idle = NodePath("../PlayerIdle")
+jump = NodePath("../PlayerJump")
+fall = NodePath("../PlayerFall")
+
+[node name="PlayerJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall")]
+script = ExtResource("8_oupxc")
+fall = NodePath("../PlayerFall")
 
 [node name="Timers" type="Node" parent="."]
 
