@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbi0epoa6yfor"]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
+[ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
+[ext_resource type="Script" path="res://src/player/platformerresource.gd" id="2_oamd2"]
+[ext_resource type="Script" path="res://src/player/states/playerstatemachine.gd" id="3_xkvhd"]
+[ext_resource type="Script" path="res://src/player/states/player_idle.gd" id="4_0tjwk"]
+[ext_resource type="Script" path="res://src/player/states/player_fall.gd" id="6_hfu8q"]
+
+[sub_resource type="Resource" id="Resource_583a7"]
+script = ExtResource("2_oamd2")
+coyote_time = 0.1
+jump_buffer_time = 0.1
+air_jump_multiplier = 0.8
+dash_jump_multiplier = 1.2
+dash_time = 0.2
+dash_jump_buffer_time = 0.2
+dash_cooldown_time = 0.2
+dash_length = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03lp6"]
+size = Vector2(48, 102)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pekkh"]
+radius = 22.561
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j56s1"]
+size = Vector2(83, 133)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("initial_movement_state")]
+script = ExtResource("1_xxqp4")
+initial_movement_state = NodePath("StateMachineHolder/PlayerStateMachine/PlayerIdle")
+platformer_settings = SubResource("Resource_583a7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -51)
+shape = SubResource("RectangleShape2D_03lp6")
+debug_color = Color(0, 0.647059, 0.231373, 0.419608)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(0, -54)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_pekkh")
+debug_color = Color(0.917647, 0.0666667, 0.00784314, 0.419608)
+
+[node name="Dodgebox" type="Area2D" parent="."]
+position = Vector2(0, -54)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dodgebox"]
+position = Vector2(-0.5, 4.5)
+shape = SubResource("RectangleShape2D_j56s1")
+debug_color = Color(0.360784, 0.882353, 1, 0.419608)
+
+[node name="StateMachineHolder" type="Node" parent="."]
+script = ExtResource("2_ed77f")
+
+[node name="PlayerStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("pawn", "initial_state")]
+script = ExtResource("3_xkvhd")
+pawn = NodePath("../..")
+initial_state = NodePath("PlayerIdle")
+
+[node name="PlayerIdle" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall")]
+script = ExtResource("4_0tjwk")
+fall = NodePath("../PlayerFall")
+
+[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle")]
+script = ExtResource("6_hfu8q")
+idle = NodePath("../PlayerIdle")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="JumpBufferTimer" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="DashTimer" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="DashJumpBufferTimer" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="Timers"]
+process_callback = 0
+one_shot = true
