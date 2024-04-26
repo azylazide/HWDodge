@@ -98,7 +98,7 @@ func _setup_timers() -> void:
 
 func _ready() -> void:
 	_setup_movement()
-	#_setup_timers()
+	_setup_timers()
 	#_setup_anim()
 
 	movement_sm.initial_state = initial_movement_state

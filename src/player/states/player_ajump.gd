@@ -1,27 +1,18 @@
 extends PlayerState
-class_name PlayerJump
+class_name PlayerAJump
 
 @export_group("Transitions")
 @export var fall: State = null
 @export var adash: State = null
 
-@export_group("References")
-@export var gdash: State = null
-
 func state_enter() -> void:
 	super()
 	player.jump_reset()
-	player.jump_buffer_timer.stop()
+	player.can_ajump = false
 
-	if machine.previous_state == gdash:
-		player.velocity.y = -player.jump_force*player.platformer_settings.dash_jump_multiplier
-		return
-
-	if not Input.is_action_pressed("jump"):
-		player.velocity.y = -player.min_jump_force
-	else:
-		player.velocity.y = -player.jump_force
+	player.velocity.y = -player.jump_force*player.platformer_settings.air_jump_multiplier
 	#player.anim_sm.travel("jump")
+
 
 func state_physics(delta: float) -> State:
 

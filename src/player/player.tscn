@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=16 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" path="res://src/player/states/player_fall.gd" id="6_hfu8q"]
 [ext_resource type="Script" path="res://src/player/states/player_run.gd" id="7_rq3b3"]
 [ext_resource type="Script" path="res://src/player/states/player_jump.gd" id="8_oupxc"]
+[ext_resource type="Script" path="res://src/player/states/player_ajump.gd" id="9_ynrpd"]
+[ext_resource type="Script" path="res://src/player/states/player_gdash.gd" id="10_pxl7d"]
+[ext_resource type="Script" path="res://src/player/states/player_adash.gd" id="11_2wucf"]
 
 [sub_resource type="Resource" id="Resource_583a7"]
 script = ExtResource("2_oamd2")
@@ -62,27 +65,51 @@ script = ExtResource("3_xkvhd")
 pawn = NodePath("../..")
 initial_state = NodePath("PlayerIdle")
 
-[node name="PlayerIdle" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("run", "jump", "fall")]
+[node name="PlayerIdle" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("run", "jump", "fall", "gdash")]
 script = ExtResource("4_0tjwk")
 run = NodePath("../PlayerRun")
 jump = NodePath("../PlayerJump")
 fall = NodePath("../PlayerFall")
+gdash = NodePath("../PlayerGDash")
 
-[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "jump")]
+[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "jump", "adash", "ajump")]
 script = ExtResource("6_hfu8q")
 idle = NodePath("../PlayerIdle")
 run = NodePath("../PlayerRun")
 jump = NodePath("../PlayerJump")
+adash = NodePath("../PlayerADash")
+ajump = NodePath("../PlayerAJump")
 
-[node name="PlayerRun" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "jump", "fall")]
+[node name="PlayerRun" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "jump", "fall", "gdash")]
 script = ExtResource("7_rq3b3")
 idle = NodePath("../PlayerIdle")
 jump = NodePath("../PlayerJump")
 fall = NodePath("../PlayerFall")
+gdash = NodePath("../PlayerGDash")
 
-[node name="PlayerJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall")]
+[node name="PlayerJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "adash")]
 script = ExtResource("8_oupxc")
 fall = NodePath("../PlayerFall")
+adash = NodePath("../PlayerAJump")
+
+[node name="PlayerAJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "adash")]
+script = ExtResource("9_ynrpd")
+fall = NodePath("../PlayerFall")
+adash = NodePath("../PlayerADash")
+
+[node name="PlayerGDash" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "fall", "jump")]
+script = ExtResource("10_pxl7d")
+idle = NodePath("../PlayerIdle")
+run = NodePath("../PlayerRun")
+fall = NodePath("../PlayerFall")
+jump = NodePath("../PlayerJump")
+
+[node name="PlayerADash" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "fall", "ajump")]
+script = ExtResource("11_2wucf")
+idle = NodePath("../PlayerIdle")
+run = NodePath("../PlayerRun")
+fall = NodePath("../PlayerFall")
+ajump = NodePath("../PlayerAJump")
 
 [node name="Timers" type="Node" parent="."]
 
