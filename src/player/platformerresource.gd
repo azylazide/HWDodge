@@ -20,3 +20,5 @@ class_name  PlatformerResource
 @export var dash_cooldown_time:= 0.2
 ## Distance travelled by dash
 @export var dash_length:= 4.0
+
+@export var dash_buffer_max:= 10.0

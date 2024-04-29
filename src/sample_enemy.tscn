@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://7k0fmijy83bf"]
+
+[ext_resource type="Script" path="res://src/sample_enemy.gd" id="1_34xib"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_or441"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_laim6"]
+radius = 90.0
+
+[node name="RigidBody2D" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_or441")
+constant_force = Vector2(-80, 0)
+script = ExtResource("1_34xib")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_laim6")

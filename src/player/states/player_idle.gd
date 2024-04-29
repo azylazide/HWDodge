@@ -11,6 +11,7 @@ class_name PlayerIdle
 func state_enter() -> void:
 	super()
 	player.ground_reset()
+	player.animplayer.play("idle")
 	#player.anim_sm.travel("idle")
 	player.velocity = Vector2.ZERO
 
@@ -22,6 +23,11 @@ func state_physics(delta: float) -> State:
 	player.was_on_floor = player.check_floor()
 	player.apply_movement(direction)
 	player.on_floor = player.check_floor()
+
+	if player.face_direction < 0:
+		player.sprite.flip_h = true
+	elif player.face_direction > 0:
+		player.sprite.flip_h = false
 
 	if not player.on_floor:
 		if not player.was_on_floor:

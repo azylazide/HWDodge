@@ -47,6 +47,10 @@ var fall_gravity: float
 var max_fall_speed: float
 ## Horizontal speed applied to dash states
 var dash_force: float
+## Dash Input Buffer
+var dash_buffer: float = 0
+
+var dash_buffer_max: float
 
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
@@ -62,6 +66,10 @@ var dash_force: float
 
 ## Dash cooldown duration timer
 @onready var dash_cooldown_timer:= $Timers/DashCooldownTimer as Timer
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+@onready var animplayer: AnimationPlayer = $AnimationPlayer
 
 ## If on floor on previous frame
 @onready var was_on_floor:= true
