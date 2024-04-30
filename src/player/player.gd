@@ -135,7 +135,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	movement_sm.machine_physics(delta)
 	action_sm.machine_physics(delta)
-	#print(action_sm.current_state)
+
+	debug_info.call_deferred()
 
 func _unhandled_input(event: InputEvent) -> void:
 	movement_sm.machine_input(event)
@@ -183,3 +184,10 @@ func jump_reset() -> void:
 func reset_kick_timer() -> void:
 	low_kick_commit_timer.stop()
 	down_buffer = false
+
+func debug_info() -> void:
+	DebugInfo.display_position(global_position)
+	DebugInfo.display_velocity(velocity)
+	DebugInfo.display_movement_state(movement_sm.previous_state,movement_sm.current_state)
+	DebugInfo.display_action_state(action_sm.previous_state,action_sm.current_state)
+	DebugInfo.display_animation(anim_sm)

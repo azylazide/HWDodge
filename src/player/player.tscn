@@ -498,7 +498,6 @@ animation = &"idle"
 libraries = {
 "": SubResource("AnimationLibrary_7hivx")
 }
-autoplay = "idle"
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
