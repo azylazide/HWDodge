@@ -28,6 +28,8 @@ class_name Player
 ## If on floor on current frame
 var on_floor: bool
 
+var anim_sm: AnimationNodeStateMachinePlayback
+
 ## Current direction of movement
 var direction: float
 ## Current facing direction
@@ -80,6 +82,8 @@ var down_buffer:= false
 
 @onready var animplayer: AnimationPlayer = $AnimationPlayer
 
+@onready var anim_tree: AnimationTree = $AnimationTree
+
 ## If on floor on previous frame
 @onready var was_on_floor:= true
 
@@ -114,10 +118,15 @@ func _setup_timers() -> void:
 	#attack_charge_timer.wait_time = attack_charge_time
 	low_kick_commit_timer.timeout.connect(func(): down_buffer = false)
 
+## Setup [AnimationTree]
+func _setup_anim() -> void:
+	anim_sm = anim_tree.get("parameters/playback")
+	anim_tree.active = true
+
 func _ready() -> void:
 	_setup_movement()
 	_setup_timers()
-	#_setup_anim()
+	_setup_anim()
 
 	movement_sm.initial_state = initial_movement_state
 	movement_sm.machine_init()
