@@ -29,17 +29,24 @@ func state_input(event: InputEvent) -> State:
 		if machine.partner.previous_state in [idle,run]:
 			if player.down_buffer:
 				is_attacking = true
-				player.anim_sm.travel("lowkick")
+				player.anim_sm.travel(&"lowkick")
 				player.reset_kick_timer()
 			else:
 				is_attacking = true
-				player.anim_sm.travel("normalkick")
+				player.anim_sm.travel(&"normalkick")
+		elif machine.partner.previous_state in [jump,fall]:
+			is_attacking = true
+			player.anim_sm.travel(&"highkick")
 
 	return null
 
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"lowkick",&"normalkick"]:
 		machine.partner.change_state(machine.partner.previous_state)
+		is_attacking = false
+		return neutral
+	elif anim_name == &"highkick":
+		machine.partner.change_state(fall)
 		is_attacking = false
 		return neutral
 	return null
