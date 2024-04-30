@@ -78,6 +78,8 @@ var down_buffer:= false
 
 @onready var low_kick_commit_timer: Timer = $Timers/LowKickCommitTimer
 
+@onready var top_kick_knockback_timer: Timer = $Timers/TopKickKnockbackTimer
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var animplayer: AnimationPlayer = $AnimationPlayer

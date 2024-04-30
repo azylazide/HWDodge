@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=79 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -39,6 +39,10 @@
 [ext_resource type="Texture2D" uid="uid://bpapoprge1wos" path="res://assets/alpha normalkick/frame0007.png" id="21_qpy34"]
 [ext_resource type="Texture2D" uid="uid://c21o70r8nqrs1" path="res://assets/alpha jump/frame0000.png" id="25_hpj8b"]
 [ext_resource type="Texture2D" uid="uid://bd0rrrefojw07" path="res://assets/alpha jump/frame0006.png" id="26_yfhpf"]
+[ext_resource type="Texture2D" uid="uid://bc36clss7la1n" path="res://assets/alpha topkick/frame0000.png" id="40_6s42r"]
+[ext_resource type="Texture2D" uid="uid://jlgs2u0hfvyy" path="res://assets/alpha topkick/frame0007.png" id="41_cjvqv"]
+[ext_resource type="Texture2D" uid="uid://8dto32bg4chy" path="res://assets/alpha topkick/frame0009.png" id="42_h447r"]
+[ext_resource type="Texture2D" uid="uid://dxfn4gjr64rsc" path="res://assets/alpha topkick/frame0014.png" id="43_tesao"]
 
 [sub_resource type="Resource" id="Resource_583a7"]
 script = ExtResource("2_oamd2")
@@ -171,6 +175,23 @@ animations = [{
 }],
 "loop": false,
 "name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("40_6s42r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_cjvqv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_h447r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_tesao")
+}],
+"loop": true,
+"name": &"topkick",
 "speed": 5.0
 }]
 
@@ -494,6 +515,46 @@ tracks/2/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_yy7yx"]
+resource_name = "topkick"
+length = 0.90001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"topkick"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
 _data = {
 "RESET": SubResource("Animation_rdrin"),
@@ -503,7 +564,8 @@ _data = {
 "jump": SubResource("Animation_2550v"),
 "lowkick": SubResource("Animation_1jv4v"),
 "normalkick": SubResource("Animation_8d6rx"),
-"run": SubResource("Animation_4eefi")
+"run": SubResource("Animation_4eefi"),
+"topkick": SubResource("Animation_yy7yx")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hyooh"]
@@ -526,6 +588,9 @@ animation = &"normalkick"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_op3ly"]
 animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f54hi"]
+animation = &"topkick"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ikvd"]
 advance_mode = 2
@@ -566,8 +631,10 @@ states/normalkick/node = SubResource("AnimationNodeAnimation_3g685")
 states/normalkick/position = Vector2(629, 268)
 states/run/node = SubResource("AnimationNodeAnimation_op3ly")
 states/run/position = Vector2(565, 100)
+states/topkick/node = SubResource("AnimationNodeAnimation_f54hi")
+states/topkick/position = Vector2(946, 268)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_6ikvd"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_h6rff"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_t8mj5"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_12n4x"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_bx1pw"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_143n6"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_tq8hr"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_avuum"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_67jdb"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_n7yes"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_hkmln")]
-graph_offset = Vector2(-45, -75.854)
+graph_offset = Vector2(30, 76.146)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("initial_movement_state")]
 script = ExtResource("1_xxqp4")
@@ -610,13 +677,15 @@ jump = NodePath("../PlayerJump")
 fall = NodePath("../PlayerFall")
 gdash = NodePath("../PlayerGDash")
 
-[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "jump", "adash", "ajump")]
+[node name="PlayerFall" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "jump", "adash", "ajump", "kick", "nonestate")]
 script = ExtResource("6_hfu8q")
 idle = NodePath("../PlayerIdle")
 run = NodePath("../PlayerRun")
 jump = NodePath("../PlayerJump")
 adash = NodePath("../PlayerADash")
 ajump = NodePath("../PlayerAJump")
+kick = NodePath("../../PlayerActionStateMachine/PlayerKick")
+nonestate = NodePath("../PlayerNone")
 
 [node name="PlayerRun" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "jump", "fall", "gdash")]
 script = ExtResource("7_rq3b3")
@@ -666,13 +735,16 @@ initial_state = NodePath("PlayerNeutral")
 script = ExtResource("12_qol0d")
 kick = NodePath("../PlayerKick")
 
-[node name="PlayerKick" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "idle", "run", "fall", "jump", "nonestate")]
+[node name="PlayerKick" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate")]
 script = ExtResource("13_cusvi")
 neutral = NodePath("../PlayerNeutral")
 idle = NodePath("../../PlayerStateMachine/PlayerIdle")
 run = NodePath("../../PlayerStateMachine/PlayerRun")
 fall = NodePath("../../PlayerStateMachine/PlayerFall")
 jump = NodePath("../../PlayerStateMachine/PlayerJump")
+gdash = NodePath("../../PlayerStateMachine/PlayerGDash")
+ajump = NodePath("../../PlayerStateMachine/PlayerAJump")
+adash = NodePath("../../PlayerStateMachine/PlayerADash")
 nonestate = NodePath("../../PlayerStateMachine/PlayerNone")
 
 [node name="Timers" type="Node" parent="."]
@@ -699,6 +771,11 @@ wait_time = 0.12
 one_shot = true
 
 [node name="LowKickCommitTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="TopKickKnockbackTimer" type="Timer" parent="Timers"]
 process_callback = 0
 wait_time = 0.5
 one_shot = true

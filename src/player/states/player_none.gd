@@ -17,11 +17,26 @@ func state_enter() -> void:
 			player.velocity.y = 0
 			if abs(player.velocity.x) > 0:
 				player.velocity.x = player.face_direction*100
+		elif machine.previous_state == gdash:
+			if abs(player.velocity.x) > 0:
+				player.velocity.x = player.face_direction*100
+		elif machine.previous_state == ajump:
+			player.velocity.y = 0
+			#player.velocity.y = player.min_jump_force
+			pass
 
 func state_physics(delta: float) -> State:
 	if machine.partner.current_state == kick:
 		if machine.previous_state in [jump,fall]:
 			if player.anim_sm.get_current_play_position() <= 0.4:
+				if abs(player.velocity.x) > 0:
+					player.velocity.x = lerpf(player.velocity.x,0,0.15)
+
+				player.was_on_floor = player.check_floor()
+				player.apply_movement(player.face_direction)
+				player.on_floor = player.check_floor()
+		elif machine.previous_state == ajump:
+			if player.anim_sm.get_current_play_position() <= 0.3:
 				if abs(player.velocity.x) > 0:
 					player.velocity.x = lerpf(player.velocity.x,0,0.15)
 
