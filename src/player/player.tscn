@@ -319,7 +319,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_1jv4v"]
 resource_name = "lowkick"
-length = 0.60001
+length = 0.24
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -351,14 +352,30 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.16),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StateMachineHolder/PlayerActionStateMachine/PlayerKick")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.17),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kick_freeze"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_8d6rx"]
 resource_name = "normalkick"
+length = 0.3
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -378,7 +395,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(-10, 0), Vector2(5, 0)]
@@ -390,14 +407,30 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StateMachineHolder/PlayerActionStateMachine/PlayerKick")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.21),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kick_freeze"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_v8ajt"]
 resource_name = "highkick"
+length = 0.4
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -417,7 +450,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(0, 0), Vector2(0, 25)]
@@ -429,10 +462,24 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StateMachineHolder/PlayerActionStateMachine/PlayerKick")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.32),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kick_freeze"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_l0t7t"]
@@ -517,7 +564,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_yy7yx"]
 resource_name = "topkick"
-length = 0.90001
+length = 0.42
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -549,10 +597,24 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.7),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StateMachineHolder/PlayerActionStateMachine/PlayerKick")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.31),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"kick_freeze"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
@@ -778,6 +840,11 @@ one_shot = true
 [node name="TopKickKnockbackTimer" type="Timer" parent="Timers"]
 process_callback = 0
 wait_time = 0.5
+one_shot = true
+
+[node name="KickCooldownTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.7
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

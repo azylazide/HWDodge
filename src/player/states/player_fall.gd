@@ -22,6 +22,11 @@ func state_enter() -> void:
 			temp_direction = player.face_direction
 			player.top_kick_knockback_timer.start()
 			player.velocity.y = -player.min_jump_force
+		if kick.prev_attack == &"highkick":
+			temp_direction = player.face_direction
+			player.top_kick_knockback_timer.start()
+			player.velocity.y = -player.min_jump_force*0.5
+
 
 func state_physics(delta: float) -> State:
 
@@ -32,6 +37,9 @@ func state_physics(delta: float) -> State:
 		if kick.prev_attack == &"topkick":
 			if not player.top_kick_knockback_timer.is_stopped():
 				player.velocity.x += 200*-temp_direction
+		if kick.prev_attack == &"highkick":
+			if not player.top_kick_knockback_timer.is_stopped():
+				player.velocity.x += 100*-temp_direction
 
 	player.apply_gravity(delta)
 

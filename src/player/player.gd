@@ -80,6 +80,8 @@ var down_buffer:= false
 
 @onready var top_kick_knockback_timer: Timer = $Timers/TopKickKnockbackTimer
 
+@onready var kick_cooldown_timer: Timer = $Timers/KickCooldownTimer
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var animplayer: AnimationPlayer = $AnimationPlayer

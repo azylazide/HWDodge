@@ -61,3 +61,9 @@ func state_animated(anim_name: StringName) -> State:
 		is_attacking = false
 		return neutral
 	return null
+
+func state_exit() -> void:
+	player.kick_cooldown_timer.start()
+
+func kick_freeze() -> void:
+	Globals.request_slowdown(0.1,0.45)
