@@ -19,7 +19,7 @@ func display_movement_state(previous: State, current: State) -> void:
 
 func display_action_state(previous: State, current: State) -> void:
 	var format = [previous.name if previous else &"None", current.name]
-	action_state.text = "Movement State\nprev: %s\ncurrent: %s" %format
+	action_state.text = "Action State\nprev: %s\ncurrent: %s" %format
 
 func display_animation(anim_sm: AnimationNodeStateMachinePlayback) -> void:
 	animation.text = "Anim: %s" %[anim_sm.get_current_node()]

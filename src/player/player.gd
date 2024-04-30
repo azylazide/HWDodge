@@ -144,8 +144,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 	movement_sm.machine_on_animation_signaled(anim_name)
-	#action_sm.machine_on_animation_signaled(anim_name)
-
+	action_sm.machine_on_animation_signaled(anim_name)
 
 ## Returns current input direction
 func get_direction() -> float:
