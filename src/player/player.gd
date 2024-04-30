@@ -52,8 +52,13 @@ var dash_buffer: float = 0
 
 var dash_buffer_max: float
 
+var inputbuffer: Array[InputEventKey] = []
+
+var down_buffer:= false
+
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
+@onready var action_sm: StateMachine = $StateMachineHolder/PlayerActionStateMachine
 
 ## Jump buffer timer
 @onready var jump_buffer_timer:= $Timers/JumpBufferTimer as Timer
@@ -66,6 +71,10 @@ var dash_buffer_max: float
 
 ## Dash cooldown duration timer
 @onready var dash_cooldown_timer:= $Timers/DashCooldownTimer as Timer
+
+@onready var kick_commit_timer: Timer = $Timers/KickCommitTimer
+
+@onready var low_kick_commit_timer: Timer = $Timers/LowKickCommitTimer
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -103,6 +112,7 @@ func _setup_timers() -> void:
 	dash_cooldown_timer.wait_time = platformer_settings.dash_cooldown_time
 
 	#attack_charge_timer.wait_time = attack_charge_time
+	low_kick_commit_timer.timeout.connect(func(): down_buffer = false)
 
 func _ready() -> void:
 	_setup_movement()
@@ -111,15 +121,16 @@ func _ready() -> void:
 
 	movement_sm.initial_state = initial_movement_state
 	movement_sm.machine_init()
-	#action_sm.machine_init()
+	action_sm.machine_init()
 
 func _physics_process(delta: float) -> void:
 	movement_sm.machine_physics(delta)
-	#action_sm.machine_physics(delta)
+	action_sm.machine_physics(delta)
+	#print(action_sm.current_state)
 
 func _unhandled_input(event: InputEvent) -> void:
 	movement_sm.machine_input(event)
-	#action_sm.machine_input(event)
+	action_sm.machine_input(event)
 
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 	movement_sm.machine_on_animation_signaled(anim_name)
@@ -159,3 +170,7 @@ func ground_reset() -> void:
 
 func jump_reset() -> void:
 	jump_buffer_timer.stop()
+
+func reset_kick_timer() -> void:
+	low_kick_commit_timer.stop()
+	down_buffer = false

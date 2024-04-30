@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=34 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -12,7 +12,10 @@
 [ext_resource type="Script" path="res://src/player/states/player_gdash.gd" id="10_pxl7d"]
 [ext_resource type="Script" path="res://src/player/states/player_adash.gd" id="11_2wucf"]
 [ext_resource type="Texture2D" uid="uid://dcgj3rxsntx4i" path="res://assets/alpha run/frame0000.png" id="12_2x0id"]
+[ext_resource type="Script" path="res://src/player/states/player_neutral.gd" id="12_qol0d"]
+[ext_resource type="Script" path="res://src/player/states/playerstate.gd" id="12_veggl"]
 [ext_resource type="Texture2D" uid="uid://cp2v8elfhc13f" path="res://assets/alpha idle/frame0000.png" id="12_yj5pq"]
+[ext_resource type="Script" path="res://src/player/states/Player_lowkick.gd" id="13_cusvi"]
 [ext_resource type="Texture2D" uid="uid://3dhl777slwqh" path="res://assets/alpha run/frame0002.png" id="13_e5jqd"]
 [ext_resource type="Texture2D" uid="uid://blj5lrrdkn7aj" path="res://assets/alpha idle/frame0002.png" id="13_mx1dm"]
 [ext_resource type="Texture2D" uid="uid://vv6dom5325sy" path="res://assets/alpha run/frame0004.png" id="14_uncw1"]
@@ -86,6 +89,45 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_rdrin"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_1dl57"]
 resource_name = "idle"
 length = 2.0
@@ -125,45 +167,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_rdrin"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_4eefi"]
@@ -244,7 +247,7 @@ script = ExtResource("2_ed77f")
 
 [node name="PlayerStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("partner", "pawn", "initial_state")]
 script = ExtResource("3_xkvhd")
-partner = NodePath("../PlayerAnimationStateMachine")
+partner = NodePath("../PlayerActionStateMachine")
 pawn = NodePath("../..")
 initial_state = NodePath("PlayerIdle")
 
@@ -270,10 +273,11 @@ jump = NodePath("../PlayerJump")
 fall = NodePath("../PlayerFall")
 gdash = NodePath("../PlayerGDash")
 
-[node name="PlayerJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "adash")]
+[node name="PlayerJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "adash", "gdash")]
 script = ExtResource("8_oupxc")
 fall = NodePath("../PlayerFall")
 adash = NodePath("../PlayerAJump")
+gdash = NodePath("../PlayerGDash")
 
 [node name="PlayerAJump" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "adash")]
 script = ExtResource("9_ynrpd")
@@ -294,11 +298,24 @@ run = NodePath("../PlayerRun")
 fall = NodePath("../PlayerFall")
 ajump = NodePath("../PlayerAJump")
 
-[node name="PlayerAnimationStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("partner", "pawn", "initial_state")]
+[node name="PlayerNone" type="Node" parent="StateMachineHolder/PlayerStateMachine"]
+script = ExtResource("12_veggl")
+
+[node name="PlayerActionStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("partner", "pawn", "initial_state")]
 script = ExtResource("3_xkvhd")
 partner = NodePath("../PlayerStateMachine")
 pawn = NodePath("../..")
-initial_state = NodePath("../PlayerStateMachine/PlayerIdle")
+initial_state = NodePath("PlayerNeutral")
+
+[node name="PlayerNeutral" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("lowkick")]
+script = ExtResource("12_qol0d")
+lowkick = NodePath("../PlayerLowKick")
+
+[node name="PlayerLowKick" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "idle", "run")]
+script = ExtResource("13_cusvi")
+neutral = NodePath("../PlayerNeutral")
+idle = NodePath("../../PlayerStateMachine/PlayerIdle")
+run = NodePath("../../PlayerStateMachine/PlayerRun")
 
 [node name="Timers" type="Node" parent="."]
 
@@ -316,6 +333,16 @@ one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="Timers"]
 process_callback = 0
+one_shot = true
+
+[node name="KickCommitTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.12
+one_shot = true
+
+[node name="LowKickCommitTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.5
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

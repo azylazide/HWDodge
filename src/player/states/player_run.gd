@@ -22,6 +22,11 @@ func state_physics(delta: float) -> State:
 	player.apply_movement(direction)
 	player.on_floor = player.check_floor()
 
+	if player.face_direction < 0:
+		player.sprite.flip_h = true
+	elif player.face_direction > 0:
+		player.sprite.flip_h = false
+
 	if not player.on_floor:
 		if not player.was_on_floor:
 			return fall

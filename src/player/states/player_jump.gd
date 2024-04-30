@@ -13,6 +13,11 @@ func state_enter() -> void:
 	player.jump_reset()
 	player.jump_buffer_timer.stop()
 
+	if player.face_direction < 0:
+		player.sprite.flip_h = true
+	elif player.face_direction > 0:
+		player.sprite.flip_h = false
+
 	if machine.previous_state == gdash:
 		player.velocity.y = -player.jump_force*player.platformer_settings.dash_jump_multiplier
 		return
