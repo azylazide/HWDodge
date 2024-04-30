@@ -21,7 +21,7 @@ func state_enter() -> void:
 		player.velocity.y = -player.min_jump_force
 	else:
 		player.velocity.y = -player.jump_force
-	#player.anim_sm.travel("jump")
+	player.anim_sm.travel("jump")
 
 func state_physics(delta: float) -> State:
 

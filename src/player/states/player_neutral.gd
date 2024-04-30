@@ -2,9 +2,7 @@ extends PlayerState
 class_name PlayerNeutral
 
 @export_group("Transitions")
-@export var lowkick: State = null
-@export var normalkick: State = null
-@export var highkick: State = null
+@export var kick: State = null
 
 func state_physics(delta: float) -> State:
 	if Input.is_action_pressed("down"):
@@ -18,6 +16,6 @@ func state_input(event: InputEvent) -> State:
 		player.low_kick_commit_timer.start()
 
 	if event.is_action_pressed("kick"):
-		return lowkick
+		return kick
 
 	return null

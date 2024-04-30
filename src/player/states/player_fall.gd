@@ -10,7 +10,7 @@ class_name PlayerFall
 
 func state_enter() -> void:
 	super()
-	#player.anim_sm.travel("fall")
+	player.anim_sm.travel("fall")
 
 func state_physics(delta: float) -> State:
 

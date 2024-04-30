@@ -1,5 +1,5 @@
 extends PlayerState
-class_name PlayerLowKick
+class_name PlayerKick
 
 @export_group("Transitions")
 @export var neutral: State = null
