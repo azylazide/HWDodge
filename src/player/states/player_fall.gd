@@ -23,7 +23,7 @@ func state_enter() -> void:
 				temp_direction = player.face_direction
 				player.kick_knockback_timer.start()
 				player.velocity.y = -player.min_jump_force
-			if kick.prev_attack == &"highkick":
+			elif kick.prev_attack == &"highkick":
 				temp_direction = player.face_direction
 				player.kick_knockback_timer.start()
 				player.velocity.y = -player.min_jump_force*0.5

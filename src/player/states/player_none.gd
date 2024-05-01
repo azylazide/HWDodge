@@ -33,5 +33,20 @@ func state_physics(delta: float) -> State:
 				player.was_on_floor = player.check_floor()
 				player.apply_movement(player.face_direction)
 				player.on_floor = player.check_floor()
+			elif player.is_kick_connected and player.is_kick_frame:
+				player.velocity.x = -player.face_direction*100
+
+				player.was_on_floor = player.check_floor()
+				player.apply_movement(player.face_direction)
+				player.on_floor = player.check_floor()
+		elif machine.previous_state in [idle,run]:
+			if player.is_kick_connected and player.is_kick_frame:
+				player.velocity.x = -player.face_direction*100
+
+				player.was_on_floor = player.check_floor()
+				player.apply_movement(player.face_direction)
+				player.on_floor = player.check_floor()
+				pass
+			pass
 
 	return null
