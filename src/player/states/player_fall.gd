@@ -21,11 +21,11 @@ func state_enter() -> void:
 		if player.is_kick_connected:
 			if kick.prev_attack == &"topkick":
 				temp_direction = player.face_direction
-				player.top_kick_knockback_timer.start()
+				player.kick_knockback_timer.start()
 				player.velocity.y = -player.min_jump_force
 			if kick.prev_attack == &"highkick":
 				temp_direction = player.face_direction
-				player.top_kick_knockback_timer.start()
+				player.kick_knockback_timer.start()
 				player.velocity.y = -player.min_jump_force*0.5
 
 			player.is_kick_connected = false
@@ -43,10 +43,10 @@ func state_physics(delta: float) -> State:
 
 	if machine.partner.previous_state == kick and machine.previous_state == nonestate:
 		if kick.prev_attack == &"topkick":
-			if not player.top_kick_knockback_timer.is_stopped():
+			if not player.kick_knockback_timer.is_stopped():
 				player.velocity.x += 200*-temp_direction
 		if kick.prev_attack == &"highkick":
-			if not player.top_kick_knockback_timer.is_stopped():
+			if not player.kick_knockback_timer.is_stopped():
 				player.velocity.x += 100*-temp_direction
 
 	player.apply_gravity(delta)

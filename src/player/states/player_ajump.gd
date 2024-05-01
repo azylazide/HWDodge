@@ -48,5 +48,8 @@ func state_input(event: InputEvent) -> State:
 
 	return null
 
+func state_exit() -> void:
+	player.top_kick_buffer_timer.start()
+
 func state_animated(anim_name: StringName) -> State:
 	return null

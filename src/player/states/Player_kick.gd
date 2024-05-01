@@ -35,13 +35,25 @@ func state_input(event: InputEvent) -> State:
 				player.reset_kick_timer()
 				prev_attack = &"lowkick"
 			else:
-				is_attacking = true
-				player.anim_sm.travel(&"normalkick")
-				prev_attack = &"normalkick"
+				if not player.high_kick_buffer_timer.is_stopped():
+					is_attacking = true
+					player.anim_sm.travel(&"highkick")
+					player.reset_kick_timer()
+					prev_attack = &"highkick"
+				else:
+					is_attacking = true
+					player.anim_sm.travel(&"normalkick")
+					prev_attack = &"normalkick"
 		elif machine.partner.previous_state in [jump,fall,gdash]:
-			is_attacking = true
-			player.anim_sm.travel(&"highkick")
-			prev_attack = &"highkick"
+			if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
+				is_attacking = true
+				player.anim_sm.travel(&"topkick")
+				player.reset_kick_timer()
+				prev_attack = &"topkick"
+			else:
+				is_attacking = true
+				player.anim_sm.travel(&"highkick")
+				prev_attack = &"highkick"
 		elif machine.partner.previous_state in [ajump,adash]:
 			is_attacking = true
 			player.anim_sm.travel(&"topkick")

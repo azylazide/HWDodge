@@ -22,3 +22,17 @@ class_name  PlatformerResource
 @export var dash_length:= 4.0
 
 @export var dash_buffer_max:= 10.0
+
+@export_subgroup("Kicks")
+
+@export var kick_cooldown_time:= 0.35
+
+@export var kick_commit_time:= 0.12
+
+@export var low_kick_buffer_time:= 0.12
+
+@export var high_kick_buffer_time:= 0.1
+
+@export var top_kick_buffer_time:= 0.1
+
+@export var kick_knockback_time:= 0.5

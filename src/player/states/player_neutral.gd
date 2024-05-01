@@ -11,9 +11,12 @@ func state_physics(delta: float) -> State:
 	return null
 
 func state_input(event: InputEvent) -> State:
+	if event.is_action_released("dash"):
+		player.top_kick_buffer_timer.start()
+		player.high_kick_buffer_timer.start()
 
 	if event.is_action_released("down"):
-		player.low_kick_commit_timer.start()
+		player.low_kick_buffer_timer.start()
 
 	if event.is_action_pressed("kick") and player.kick_cooldown_timer.is_stopped():
 		return kick

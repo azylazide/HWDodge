@@ -78,11 +78,15 @@ var is_kick_connected:= false
 
 @onready var kick_commit_timer: Timer = $Timers/KickCommitTimer
 
-@onready var low_kick_commit_timer: Timer = $Timers/LowKickCommitTimer
+@onready var low_kick_buffer_timer: Timer = $Timers/LowKickBufferTimer
 
-@onready var top_kick_knockback_timer: Timer = $Timers/TopKickKnockbackTimer
+@onready var kick_knockback_timer: Timer = $Timers/KickKnockbackTimer
 
 @onready var kick_cooldown_timer: Timer = $Timers/KickCooldownTimer
+
+@onready var high_kick_buffer_timer: Timer = $Timers/HighKickBufferTimer
+
+@onready var top_kick_buffer_timer: Timer = $Timers/TopKickBufferTimer
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -126,7 +130,13 @@ func _setup_timers() -> void:
 	dash_cooldown_timer.wait_time = platformer_settings.dash_cooldown_time
 
 	#attack_charge_timer.wait_time = attack_charge_time
-	low_kick_commit_timer.timeout.connect(func(): down_buffer = false)
+	low_kick_buffer_timer.timeout.connect(func(): down_buffer = false)
+	low_kick_buffer_timer.wait_time = platformer_settings.low_kick_buffer_time
+	kick_knockback_timer.wait_time = platformer_settings.kick_knockback_time
+	kick_cooldown_timer.wait_time = platformer_settings.kick_cooldown_time
+	high_kick_buffer_timer.wait_time = platformer_settings.high_kick_buffer_time
+	top_kick_buffer_timer.wait_time = platformer_settings.top_kick_buffer_time
+
 
 ## Setup [AnimationTree]
 func _setup_anim() -> void:
@@ -196,7 +206,9 @@ func jump_reset() -> void:
 	jump_buffer_timer.stop()
 
 func reset_kick_timer() -> void:
-	low_kick_commit_timer.stop()
+	low_kick_buffer_timer.stop()
+	top_kick_buffer_timer.stop()
+	high_kick_buffer_timer.stop()
 	down_buffer = false
 
 func kick_check(check: bool) -> void:

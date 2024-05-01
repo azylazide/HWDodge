@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 DebugInfo="*res://src/debug_info.tscn"
 Globals="*res://src/globals.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 left={
