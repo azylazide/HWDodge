@@ -950,10 +950,16 @@ run = NodePath("../PlayerRun")
 fall = NodePath("../PlayerFall")
 ajump = NodePath("../PlayerAJump")
 
-[node name="PlayerNone" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("fall", "jump", "kick")]
+[node name="PlayerNone" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate", "kick")]
 script = ExtResource("12_kedcb")
+idle = NodePath("../PlayerIdle")
+run = NodePath("../PlayerRun")
 fall = NodePath("../PlayerFall")
 jump = NodePath("../PlayerJump")
+gdash = NodePath("../PlayerGDash")
+ajump = NodePath("../PlayerAJump")
+adash = NodePath("../PlayerADash")
+nonestate = NodePath(".")
 kick = NodePath("../../PlayerActionStateMachine/PlayerKick")
 
 [node name="PlayerActionStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("partner", "pawn", "initial_state")]
