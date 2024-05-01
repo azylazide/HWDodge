@@ -14,6 +14,7 @@ class_name PlayerKick
 @export var adash: State = null
 @export var nonestate: State = null
 
+# actively attacking
 var is_attacking:= false
 var prev_attack: StringName = &""
 
@@ -26,6 +27,8 @@ func state_physics(delta: float) -> State:
 
 func state_input(event: InputEvent) -> State:
 	if event.is_action_released("kick") and not is_attacking:
+		# movement states immediately transition
+		# movement states to check are previous
 		machine.partner.change_state(nonestate)
 
 		if machine.partner.previous_state in [idle,run]:
@@ -35,6 +38,7 @@ func state_input(event: InputEvent) -> State:
 				player.reset_kick_timer()
 				prev_attack = &"lowkick"
 			else:
+				# highkick from buffer after gdash
 				if not player.high_kick_buffer_timer.is_stopped():
 					is_attacking = true
 					player.anim_sm.travel(&"highkick")
@@ -45,6 +49,7 @@ func state_input(event: InputEvent) -> State:
 					player.anim_sm.travel(&"normalkick")
 					prev_attack = &"normalkick"
 		elif machine.partner.previous_state in [jump,fall,gdash]:
+			# topkick from buffer after ajump or adash
 			if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
 				is_attacking = true
 				player.anim_sm.travel(&"topkick")
