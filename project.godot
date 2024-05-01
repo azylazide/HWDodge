@@ -67,7 +67,11 @@ down={
 2d_physics/layer_1="environment"
 2d_physics/layer_2="player"
 2d_physics/layer_3="enemies"
-2d_physics/layer_4="hazards"
+2d_physics/layer_4="enemyhazards"
+2d_physics/layer_5="playerprojectiles"
+2d_physics/layer_6="enemyprojectiles"
+2d_physics/layer_7="generalhazards"
+2d_physics/layer_8="playerhazards"
 
 [rendering]
 

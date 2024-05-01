@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=82 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://dkis6lhfyjut0" path="res://assets/alpha fall/frame0000.png" id="15_duh0e"]
 [ext_resource type="Texture2D" uid="uid://47jggn4f647g" path="res://assets/alpha highkick/frame0000.png" id="15_ik81r"]
 [ext_resource type="Texture2D" uid="uid://5ih4ifxrhyj6" path="res://assets/alpha run/frame0006.png" id="15_mpnqy"]
+[ext_resource type="Script" path="res://src/player/states/playerstate.gd" id="15_sjqix"]
 [ext_resource type="Texture2D" uid="uid://cvr13e7e21x4y" path="res://assets/alpha fall/frame0003.png" id="16_e468j"]
 [ext_resource type="Texture2D" uid="uid://duatiekyqw04r" path="res://assets/alpha run/frame0008.png" id="16_qkv6e"]
 [ext_resource type="Texture2D" uid="uid://15tv7y4falkg" path="res://assets/alpha highkick/frame0002.png" id="16_s144f"]
@@ -989,6 +990,9 @@ gdash = NodePath("../../PlayerStateMachine/PlayerGDash")
 ajump = NodePath("../../PlayerStateMachine/PlayerAJump")
 adash = NodePath("../../PlayerStateMachine/PlayerADash")
 nonestate = NodePath("../../PlayerStateMachine/PlayerNone")
+
+[node name="PlayerBow" type="Node" parent="StateMachineHolder/PlayerActionStateMachine"]
+script = ExtResource("15_sjqix")
 
 [node name="Timers" type="Node" parent="."]
 
