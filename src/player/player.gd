@@ -58,6 +58,8 @@ var inputbuffer: Array[InputEventKey] = []
 
 var down_buffer:= false
 
+var is_kick_connected:= false
+
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
 @onready var action_sm: StateMachine = $StateMachineHolder/PlayerActionStateMachine
@@ -88,6 +90,8 @@ var down_buffer:= false
 
 @onready var anim_tree: AnimationTree = $AnimationTree
 
+@onready var kick_box: Area2D = $KickBox
+
 ## If on floor on previous frame
 @onready var was_on_floor:= true
 
@@ -110,7 +114,7 @@ func _setup_movement() -> void:
 
 	dash_force = Utils._dash_speed(platformer_settings.dash_length,platformer_settings.dash_time)
 
-	face_direction = 1
+	face_direction = initial_direction
 
 ## Setup timer durations
 func _setup_timers() -> void:
@@ -127,10 +131,14 @@ func _setup_anim() -> void:
 	anim_sm = anim_tree.get("parameters/playback")
 	anim_tree.active = true
 
+func _setup_other() -> void:
+	kick_box.kick_connected.connect(func(): is_kick_connected = true)
+
 func _ready() -> void:
 	_setup_movement()
 	_setup_timers()
 	_setup_anim()
+	_setup_other()
 
 	movement_sm.initial_state = initial_movement_state
 	movement_sm.machine_init()

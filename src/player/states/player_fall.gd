@@ -18,14 +18,22 @@ func state_enter() -> void:
 	super()
 	player.anim_sm.travel("fall")
 	if machine.partner.current_state == kick and machine.previous_state == nonestate:
-		if kick.prev_attack == &"topkick":
-			temp_direction = player.face_direction
-			player.top_kick_knockback_timer.start()
-			player.velocity.y = -player.min_jump_force
-		if kick.prev_attack == &"highkick":
-			temp_direction = player.face_direction
-			player.top_kick_knockback_timer.start()
-			player.velocity.y = -player.min_jump_force*0.5
+		if player.is_kick_connected:
+			if kick.prev_attack == &"topkick":
+				temp_direction = player.face_direction
+				player.top_kick_knockback_timer.start()
+				player.velocity.y = -player.min_jump_force
+			if kick.prev_attack == &"highkick":
+				temp_direction = player.face_direction
+				player.top_kick_knockback_timer.start()
+				player.velocity.y = -player.min_jump_force*0.5
+
+			player.is_kick_connected = false
+		else:
+			if kick.prev_attack == &"topkick":
+				player.velocity.y = -player.min_jump_force
+			else:
+				player.velocity.y = 0
 
 
 func state_physics(delta: float) -> State:

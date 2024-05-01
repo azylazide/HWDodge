@@ -24,6 +24,7 @@ texture = ExtResource("2_bue2f")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_7glv8")]
 position = Vector2(580, 450)
+initial_direction = 0
 
 [node name="RigidBody2D" parent="." instance=ExtResource("3_njgtq")]
 position = Vector2(1082, 286)

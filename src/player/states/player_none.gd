@@ -21,8 +21,7 @@ func state_enter() -> void:
 			if abs(player.velocity.x) > 0:
 				player.velocity.x = player.face_direction*100
 		elif machine.previous_state == ajump:
-			player.velocity.y = 0
-			#player.velocity.y = player.min_jump_force
+			player.velocity.y = -player.jump_force
 			pass
 
 func state_physics(delta: float) -> State:
