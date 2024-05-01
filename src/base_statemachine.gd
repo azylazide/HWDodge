@@ -9,6 +9,7 @@ var current_state: State = null
 var previous_state: State = null
 var previous_frame_state: State
 var next_state: State
+var state_history: Array[State] = []
 
 func machine_init() -> void:
 	for child in get_children():
@@ -48,5 +49,14 @@ func change_state(new_state: State) -> void:
 		previous_state = current_state
 		current_state.state_exit()
 
+	_update_history(new_state)
 	current_state = new_state
 	current_state.state_enter()
+
+func _update_history(new_state: State) -> void:
+	if state_history.size() > 5:
+		state_history.pop_front()
+
+	state_history.append(new_state)
+
+	pass

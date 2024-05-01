@@ -13,13 +13,19 @@ func display_position(value: Vector2) -> void:
 func display_velocity(value: Vector2) -> void:
 	velocity.text = "Velocity: (%.00f,%.00f)" %[value.x,value.y]
 
-func display_movement_state(previous: State, current: State) -> void:
-	var format = [previous.name if previous else &"None", current.name]
-	movement_state.text = "Movement State\nprev: %s\ncurrent: %s" %format
+func display_movement_state(statemachine: StateMachine) -> void:
+	var state_names: Array[String] = []
+	for s in statemachine.state_history:
+		state_names.append(s.name)
+	var format = [statemachine.previous_state.name if statemachine.previous_state else &"None", statemachine.current_state.name,state_names]
+	movement_state.text = "Movement State\nprev: %s\ncurrent: %s\n%s" %format
 
-func display_action_state(previous: State, current: State) -> void:
-	var format = [previous.name if previous else &"None", current.name]
-	action_state.text = "Action State\nprev: %s\ncurrent: %s" %format
+func display_action_state(statemachine: StateMachine) -> void:
+	var state_names: Array[String] = []
+	for s in statemachine.state_history:
+		state_names.append(s.name)
+	var format = [statemachine.previous_state.name if statemachine.previous_state else &"None", statemachine.current_state.name,state_names]
+	action_state.text = "Action State\nprev: %s\ncurrent: %s\n%s" %format
 
 func display_animation(anim_sm: AnimationNodeStateMachinePlayback) -> void:
 	animation.text = "Anim: %s" %[anim_sm.get_current_node()]

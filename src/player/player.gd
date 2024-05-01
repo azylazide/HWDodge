@@ -134,6 +134,7 @@ func _ready() -> void:
 
 	movement_sm.initial_state = initial_movement_state
 	movement_sm.machine_init()
+	action_sm.initial_state = initial_action_state
 	action_sm.machine_init()
 
 func _physics_process(delta: float) -> void:
@@ -191,6 +192,6 @@ func reset_kick_timer() -> void:
 func debug_info() -> void:
 	DebugInfo.display_position(global_position)
 	DebugInfo.display_velocity(velocity)
-	DebugInfo.display_movement_state(movement_sm.previous_state,movement_sm.current_state)
-	DebugInfo.display_action_state(action_sm.previous_state,action_sm.current_state)
+	DebugInfo.display_movement_state(movement_sm)
+	DebugInfo.display_action_state(action_sm)
 	DebugInfo.display_animation(anim_sm)

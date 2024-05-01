@@ -45,7 +45,6 @@ func state_input(event: InputEvent) -> State:
 		elif machine.partner.previous_state in [ajump,adash]:
 			is_attacking = true
 			player.anim_sm.travel(&"topkick")
-			print("TOPKICK")
 			prev_attack = &"topkick"
 
 	return null
@@ -57,13 +56,9 @@ func state_animated(anim_name: StringName) -> State:
 		return neutral
 	elif anim_name in [&"highkick",&"topkick"]:
 		machine.partner.change_state(fall)
-		print(prev_attack,"GONNA FALL")
 		is_attacking = false
 		return neutral
 	return null
 
 func state_exit() -> void:
 	player.kick_cooldown_timer.start()
-
-func kick_freeze() -> void:
-	Globals.request_slowdown(0.1,0.45)

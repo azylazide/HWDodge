@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://djykh2ypj1v5a"]
+[gd_scene load_steps=6 format=3 uid="uid://djykh2ypj1v5a"]
 
 [ext_resource type="PackedScene" uid="uid://dbi0epoa6yfor" path="res://src/player/player.tscn" id="1_7glv8"]
 [ext_resource type="Texture2D" uid="uid://byj4jf3qltycm" path="res://icon.svg" id="2_bue2f"]
 [ext_resource type="PackedScene" uid="uid://7k0fmijy83bf" path="res://src/sample_enemy.tscn" id="3_njgtq"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6wwee"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r55q2"]
+radius = 27.8927
 
 [node name="World" type="Node2D"]
 
@@ -24,3 +27,11 @@ position = Vector2(580, 450)
 
 [node name="RigidBody2D" parent="." instance=ExtResource("3_njgtq")]
 position = Vector2(1082, 286)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(821, 290)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_r55q2")
