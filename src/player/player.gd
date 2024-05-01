@@ -101,6 +101,8 @@ var is_kick_connected:= false
 ## Double jump is allowed
 @onready var can_ajump:= true
 
+@onready var is_kick_frame:= false
+
 ## Setup movement values
 func _setup_movement() -> void:
 	jump_gravity = Utils._gravity(jump_height,max_run_tile,gap_length)
@@ -196,6 +198,9 @@ func jump_reset() -> void:
 func reset_kick_timer() -> void:
 	low_kick_commit_timer.stop()
 	down_buffer = false
+
+func kick_check(check: bool) -> void:
+	is_kick_frame = check
 
 func debug_info() -> void:
 	DebugInfo.display_position(global_position)

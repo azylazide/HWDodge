@@ -27,7 +27,7 @@ func state_enter() -> void:
 func state_physics(delta: float) -> State:
 	if machine.partner.current_state == kick:
 		if machine.previous_state in [jump,fall]:
-			if player.anim_sm.get_current_play_position() <= 0.4:
+			if player.is_kick_frame:
 				if abs(player.velocity.x) > 0:
 					player.velocity.x = lerpf(player.velocity.x,0,0.15)
 
@@ -35,7 +35,7 @@ func state_physics(delta: float) -> State:
 				player.apply_movement(player.face_direction)
 				player.on_floor = player.check_floor()
 		elif machine.previous_state == ajump:
-			if player.anim_sm.get_current_play_position() <= 0.3:
+			if player.is_kick_frame:
 				if abs(player.velocity.x) > 0:
 					player.velocity.x = lerpf(player.velocity.x,0,0.15)
 
