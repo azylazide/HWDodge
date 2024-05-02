@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=100 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -24,16 +24,20 @@
 [ext_resource type="Texture2D" uid="uid://5ih4ifxrhyj6" path="res://assets/alpha run/frame0006.png" id="15_mpnqy"]
 [ext_resource type="Script" path="res://src/player/states/player_bow.gd" id="16_5ofav"]
 [ext_resource type="Texture2D" uid="uid://cvr13e7e21x4y" path="res://assets/alpha fall/frame0003.png" id="16_e468j"]
+[ext_resource type="Texture2D" uid="uid://oqvfoy7vvw8c" path="res://assets/alpha airbow/frame0000.png" id="16_mo8m8"]
 [ext_resource type="Texture2D" uid="uid://duatiekyqw04r" path="res://assets/alpha run/frame0008.png" id="16_qkv6e"]
 [ext_resource type="Texture2D" uid="uid://15tv7y4falkg" path="res://assets/alpha highkick/frame0002.png" id="16_s144f"]
 [ext_resource type="Texture2D" uid="uid://df75eagc7ghed" path="res://assets/alpha lowkick/frame0000.png" id="17_0b81w"]
 [ext_resource type="Texture2D" uid="uid://b5jy6d3mnfktj" path="res://assets/alpha highkick/frame0007.png" id="17_4sqt5"]
 [ext_resource type="Texture2D" uid="uid://yih6jpi41wum" path="res://assets/alpha fall/frame0005.png" id="17_r1ct3"]
 [ext_resource type="Texture2D" uid="uid://cj1uo7w544qet" path="res://assets/alpha run/frame0010.png" id="17_syv76"]
+[ext_resource type="Texture2D" uid="uid://c32cbbw86dnfd" path="res://assets/alpha airbow/frame0002.png" id="17_xauqk"]
+[ext_resource type="Texture2D" uid="uid://dsap8clkd6eks" path="res://assets/alpha airbow/frame0006.png" id="18_ampwi"]
 [ext_resource type="Texture2D" uid="uid://de4m7v2r1xrsf" path="res://assets/alpha run/frame0012.png" id="18_f4lj7"]
 [ext_resource type="Texture2D" uid="uid://ci2462v3ldo88" path="res://assets/alpha fall/frame0011.png" id="18_ud75g"]
 [ext_resource type="Texture2D" uid="uid://cdhqfjfoov0eq" path="res://assets/alpha lowkick/frame0007.png" id="18_x3od6"]
 [ext_resource type="Texture2D" uid="uid://cue2drycx5aa8" path="res://assets/alpha normalkick/frame0000.png" id="19_0734b"]
+[ext_resource type="Texture2D" uid="uid://3oqnwxg5ikeu" path="res://assets/alpha airbow/frame0010.png" id="19_hhtwj"]
 [ext_resource type="Texture2D" uid="uid://bq8t2skria0b2" path="res://assets/alpha run/frame0014.png" id="19_t5s6a"]
 [ext_resource type="Texture2D" uid="uid://cmje5beadm346" path="res://assets/alpha fall/frame0013.png" id="19_x42pw"]
 [ext_resource type="Texture2D" uid="uid://6b4al56rjv7a" path="res://assets/alpha normalkick/frame0002.png" id="20_ftm58"]
@@ -83,6 +87,23 @@ size = Vector2(59, 100)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_swuc4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_mo8m8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_xauqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ampwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hhtwj")
+}],
+"loop": true,
+"name": &"airbow",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("15_duh0e")
@@ -970,9 +991,82 @@ tracks/4/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_ysqnn"]
+resource_name = "airbow"
+length = 0.24
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"airbow"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire_bow"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"bow_charge_check"
+}, {
+"args": [true],
+"method": &"bow_charge_check"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
 _data = {
 "RESET": SubResource("Animation_rdrin"),
+"airbow": SubResource("Animation_ysqnn"),
 "fall": SubResource("Animation_l0t7t"),
 "highkick": SubResource("Animation_v8ajt"),
 "idle": SubResource("Animation_1dl57"),
@@ -984,6 +1078,9 @@ _data = {
 "run": SubResource("Animation_4eefi"),
 "topkick": SubResource("Animation_yy7yx")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8onc"]
+animation = &"airbow"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hyooh"]
 animation = &"fall"
@@ -1040,6 +1137,8 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hsi1y"]
 states/Start/position = Vector2(171, 100)
+states/airbow/node = SubResource("AnimationNodeAnimation_n8onc")
+states/airbow/position = Vector2(946, 200.146)
 states/fall/node = SubResource("AnimationNodeAnimation_hyooh")
 states/fall/position = Vector2(424, -43.854)
 states/highkick/node = SubResource("AnimationNodeAnimation_hhh8p")

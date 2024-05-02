@@ -35,10 +35,14 @@ func state_input(event: InputEvent) -> State:
 			is_attacking = true
 			player.anim_sm.travel(&"idlebow")
 			prev_attack = &"idlebow"
-		if machine.partner.previous_state in [run,gdash]:
+		elif machine.partner.previous_state in [run,gdash]:
 			is_attacking = true
 			player.anim_sm.travel(&"movebow")
 			prev_attack = &"movebow"
+		elif machine.partner.previous_state in [fall,jump,ajump,adash]:
+			is_attacking = true
+			player.anim_sm.travel(&"airbow")
+			prev_attack = &"airbow"
 		#elif machine.partner.previous_state in [jump,fall,gdash]:
 			## topkick from buffer after ajump or adash
 			#if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
@@ -60,6 +64,10 @@ func state_input(event: InputEvent) -> State:
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"idlebow",&"movebow"]:
 		machine.partner.change_state(idle)
+		is_attacking = false
+		return neutral
+	elif anim_name == &"airbow":
+		machine.partner.change_state(fall)
 		is_attacking = false
 		return neutral
 	#elif anim_name in [&"highkick",&"topkick"]:

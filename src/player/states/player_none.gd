@@ -33,6 +33,15 @@ func state_enter() -> void:
 		elif machine.previous_state in [run,gdash]:
 			if abs(player.velocity.x) > 0:
 				player.velocity.x = -player.face_direction*300
+		# apply residual motion
+		elif machine.previous_state in [jump,fall,ajump]:
+			player.velocity.y = 0
+			if abs(player.velocity.x) > 0:
+				player.velocity.x = -player.face_direction*200
+		elif machine.previous_state == adash:
+			if abs(player.velocity.x) > 0:
+				player.velocity.x = -player.face_direction*300
+
 
 func state_physics(delta: float) -> State:
 	# kick state controlled physics
@@ -65,6 +74,11 @@ func state_physics(delta: float) -> State:
 
 	elif machine.partner.current_state == bow:
 		if machine.previous_state in [idle,run,gdash]:
+			if not player.is_bow_charged:
+				player.was_on_floor = player.check_floor()
+				player.apply_movement(player.face_direction)
+				player.on_floor = player.check_floor()
+		elif machine.previous_state in [fall,jump,ajump,adash]:
 			if not player.is_bow_charged:
 				player.was_on_floor = player.check_floor()
 				player.apply_movement(player.face_direction)
