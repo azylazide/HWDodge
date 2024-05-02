@@ -75,6 +75,7 @@ low_kick_buffer_time = 0.12
 high_kick_buffer_time = 0.1
 top_kick_buffer_time = 0.1
 kick_knockback_time = 0.5
+bow_cooldown_time = 0.12
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03lp6"]
 size = Vector2(45, 88)
@@ -1395,6 +1396,11 @@ one_shot = true
 
 [node name="HighKickBufferTimer" type="Timer" parent="Timers"]
 process_callback = 0
+one_shot = true
+
+[node name="BowCooldownTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.35
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

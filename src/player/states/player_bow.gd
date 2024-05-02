@@ -77,5 +77,5 @@ func state_animated(anim_name: StringName) -> State:
 	return null
 
 func state_exit() -> void:
-	#player.kick_cooldown_timer.start()
+	player.bow_cooldown_timer.start()
 	pass

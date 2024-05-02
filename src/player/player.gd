@@ -92,6 +92,8 @@ var is_bow_charged:= false
 
 @onready var top_kick_buffer_timer: Timer = $Timers/TopKickBufferTimer
 
+@onready var bow_cooldown_timer: Timer = $Timers/BowCooldownTimer
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var animplayer: AnimationPlayer = $AnimationPlayer
@@ -140,6 +142,8 @@ func _setup_timers() -> void:
 	kick_cooldown_timer.wait_time = platformer_settings.kick_cooldown_time
 	high_kick_buffer_timer.wait_time = platformer_settings.high_kick_buffer_time
 	top_kick_buffer_timer.wait_time = platformer_settings.top_kick_buffer_time
+
+	bow_cooldown_timer.wait_time = platformer_settings.bow_cooldown_time
 
 
 ## Setup [AnimationTree]

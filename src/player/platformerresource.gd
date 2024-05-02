@@ -36,3 +36,7 @@ class_name  PlatformerResource
 @export var top_kick_buffer_time:= 0.1
 
 @export var kick_knockback_time:= 0.5
+
+@export_subgroup("Bow")
+
+@export var bow_cooldown_time:= 0.12
