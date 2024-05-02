@@ -33,3 +33,6 @@ func state_input(event: InputEvent) -> State:
 
 func state_animated(anim_name: StringName) -> State:
 	return null
+
+func state_interrupt(message: String) -> State:
+	return null

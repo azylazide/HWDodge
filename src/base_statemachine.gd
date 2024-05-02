@@ -40,6 +40,10 @@ func machine_on_animation_signaled(anim_name: StringName) -> void:
 	var new_state: State = current_state.state_animated(anim_name)
 	change_state(new_state)
 
+func machine_interrupt(message: String) -> void:
+	var new_state: State = current_state.state_interrupt(message)
+	change_state(new_state)
+
 func change_state(new_state: State) -> void:
 	previous_frame_state = current_state
 	if not new_state:
