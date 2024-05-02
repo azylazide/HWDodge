@@ -25,6 +25,8 @@ class_name Player
 ## Stores player specific movement related parameters
 @export var platformer_settings: PlatformerResource
 
+signal bow_fired(bowtype: StringName)
+
 ## If on floor on current frame
 var on_floor: bool
 
@@ -59,6 +61,8 @@ var inputbuffer: Array[InputEventKey] = []
 var down_buffer:= false
 
 var is_kick_connected:= false
+
+var is_bow_charged:= false
 
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
@@ -120,7 +124,7 @@ func _setup_movement() -> void:
 
 	dash_force = Utils._dash_speed(platformer_settings.dash_length,platformer_settings.dash_time)
 
-	face_direction = initial_direction
+	face_direction = float(2*initial_direction-1)
 
 ## Setup timer durations
 func _setup_timers() -> void:
@@ -213,6 +217,14 @@ func reset_kick_timer() -> void:
 
 func kick_check(check: bool) -> void:
 	is_kick_frame = check
+
+func bow_charge_check(check: bool) -> void:
+	is_bow_charged = true
+
+func fire_bow() -> void:
+	bow_fired.emit(action_sm.current_state.prev_attack)
+	is_bow_charged = false
+	pass
 
 func debug_info() -> void:
 	DebugInfo.display_position(global_position)

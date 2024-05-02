@@ -10,6 +10,7 @@ extends PlayerState
 @export var adash: State = null
 @export var nonestate: State = null
 @export var kick: State = null
+@export var bow: State = null
 
 func state_enter() -> void:
 	# kick state controlled enter
@@ -24,6 +25,14 @@ func state_enter() -> void:
 				player.velocity.x = player.face_direction*150
 		elif machine.previous_state == ajump:
 			player.velocity.y = -player.min_jump_force
+
+	elif machine.partner.current_state == bow:
+		# small step back
+		if machine.previous_state == idle:
+			player.velocity.x = -player.face_direction*200
+		elif machine.previous_state in [run,gdash]:
+			if abs(player.velocity.x) > 0:
+				player.velocity.x = -player.face_direction*300
 
 func state_physics(delta: float) -> State:
 	# kick state controlled physics
@@ -53,6 +62,12 @@ func state_physics(delta: float) -> State:
 				player.apply_movement(player.face_direction)
 				player.on_floor = player.check_floor()
 				pass
-			pass
+
+	elif machine.partner.current_state == bow:
+		if machine.previous_state in [idle,run,gdash]:
+			if not player.is_bow_charged:
+				player.was_on_floor = player.check_floor()
+				player.apply_movement(player.face_direction)
+				player.on_floor = player.check_floor()
 
 	return null
