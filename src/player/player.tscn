@@ -1,8 +1,9 @@
-[gd_scene load_steps=100 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=107 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
 [ext_resource type="Script" path="res://src/player/platformerresource.gd" id="2_oamd2"]
+[ext_resource type="Script" path="res://src/player_settings.gd" id="3_gaq6w"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachine.gd" id="3_xkvhd"]
 [ext_resource type="Script" path="res://src/player/states/player_idle.gd" id="4_0tjwk"]
 [ext_resource type="Script" path="res://src/player/states/player_fall.gd" id="6_hfu8q"]
@@ -29,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://15tv7y4falkg" path="res://assets/alpha highkick/frame0002.png" id="16_s144f"]
 [ext_resource type="Texture2D" uid="uid://df75eagc7ghed" path="res://assets/alpha lowkick/frame0000.png" id="17_0b81w"]
 [ext_resource type="Texture2D" uid="uid://b5jy6d3mnfktj" path="res://assets/alpha highkick/frame0007.png" id="17_4sqt5"]
+[ext_resource type="Script" path="res://src/player/states/player_stagger.gd" id="17_hogic"]
 [ext_resource type="Texture2D" uid="uid://yih6jpi41wum" path="res://assets/alpha fall/frame0005.png" id="17_r1ct3"]
 [ext_resource type="Texture2D" uid="uid://cj1uo7w544qet" path="res://assets/alpha run/frame0010.png" id="17_syv76"]
 [ext_resource type="Texture2D" uid="uid://c32cbbw86dnfd" path="res://assets/alpha airbow/frame0002.png" id="17_xauqk"]
@@ -57,6 +59,8 @@
 [ext_resource type="Texture2D" uid="uid://8dto32bg4chy" path="res://assets/alpha topkick/frame0009.png" id="42_h447r"]
 [ext_resource type="Texture2D" uid="uid://dxfn4gjr64rsc" path="res://assets/alpha topkick/frame0014.png" id="43_tesao"]
 [ext_resource type="Script" path="res://src/player/kickbox.gd" id="44_vl3yl"]
+[ext_resource type="Texture2D" uid="uid://bis7p57b5fkve" path="res://assets/alpha stagger/frame0000.png" id="55_ge4us"]
+[ext_resource type="Texture2D" uid="uid://bc7iscudqrp4n" path="res://assets/alpha stagger/frame0006.png" id="56_sta8h"]
 
 [sub_resource type="Resource" id="Resource_583a7"]
 script = ExtResource("2_oamd2")
@@ -76,6 +80,13 @@ high_kick_buffer_time = 0.1
 top_kick_buffer_time = 0.1
 kick_knockback_time = 0.5
 bow_cooldown_time = 0.12
+invincibility_time = 4.0
+
+[sub_resource type="Resource" id="Resource_20l6p"]
+script = ExtResource("3_gaq6w")
+health = 100
+kick_knockback_strength = 200.0
+arrow_strength = 40
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_03lp6"]
 size = Vector2(45, 88)
@@ -247,6 +258,17 @@ animations = [{
 }],
 "loop": false,
 "name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("55_ge4us")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_sta8h")
+}],
+"loop": true,
+"name": &"stagger",
 "speed": 5.0
 }, {
 "frames": [{
@@ -1112,6 +1134,46 @@ tracks/5/keys = {
 "values": [Vector2(45, -72)]
 }
 
+[sub_resource type="Animation" id="Animation_eg6yt"]
+resource_name = "stagger"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"stagger"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
 _data = {
 "RESET": SubResource("Animation_rdrin"),
@@ -1125,6 +1187,7 @@ _data = {
 "movebow": SubResource("Animation_gkb08"),
 "normalkick": SubResource("Animation_8d6rx"),
 "run": SubResource("Animation_4eefi"),
+"stagger": SubResource("Animation_eg6yt"),
 "topkick": SubResource("Animation_yy7yx")
 }
 
@@ -1157,6 +1220,9 @@ animation = &"normalkick"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_op3ly"]
 animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8gri7"]
+animation = &"stagger"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f54hi"]
 animation = &"topkick"
@@ -1206,6 +1272,8 @@ states/normalkick/node = SubResource("AnimationNodeAnimation_3g685")
 states/normalkick/position = Vector2(629, 268)
 states/run/node = SubResource("AnimationNodeAnimation_op3ly")
 states/run/position = Vector2(565, 100)
+states/stagger/node = SubResource("AnimationNodeAnimation_8gri7")
+states/stagger/position = Vector2(320, 205.146)
 states/topkick/node = SubResource("AnimationNodeAnimation_f54hi")
 states/topkick/position = Vector2(946, 268)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_6ikvd"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_h6rff"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_t8mj5"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_12n4x"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_bx1pw"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_143n6"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_tq8hr"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_avuum"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_67jdb"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_n7yes"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_hkmln")]
@@ -1221,6 +1289,7 @@ initial_direction = 0
 initial_movement_state = NodePath("StateMachineHolder/PlayerStateMachine/PlayerIdle")
 initial_action_state = NodePath("StateMachineHolder/PlayerActionStateMachine/PlayerNeutral")
 platformer_settings = SubResource("Resource_583a7")
+player_details = SubResource("Resource_20l6p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -44)
@@ -1230,16 +1299,19 @@ debug_color = Color(0, 0.647059, 0.231373, 0.419608)
 [node name="Hurtbox" type="Area2D" parent="."]
 position = Vector2(0, -45)
 collision_layer = 2
-collision_mask = 12
+collision_mask = 104
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_pekkh")
 debug_color = Color(0.917647, 0.0666667, 0.00784314, 0.419608)
 
 [node name="Dodgebox" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -54)
 collision_layer = 2
-collision_mask = 12
+collision_mask = 8
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Dodgebox"]
 position = Vector2(-0.5, 9)
@@ -1304,7 +1376,7 @@ run = NodePath("../PlayerRun")
 fall = NodePath("../PlayerFall")
 ajump = NodePath("../PlayerAJump")
 
-[node name="PlayerNone" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate", "kick", "bow")]
+[node name="PlayerNone" type="Node" parent="StateMachineHolder/PlayerStateMachine" node_paths=PackedStringArray("idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate", "kick", "bow", "stagger")]
 script = ExtResource("12_kedcb")
 idle = NodePath("../PlayerIdle")
 run = NodePath("../PlayerRun")
@@ -1316,6 +1388,7 @@ adash = NodePath("../PlayerADash")
 nonestate = NodePath(".")
 kick = NodePath("../../PlayerActionStateMachine/PlayerKick")
 bow = NodePath("../../PlayerActionStateMachine/PlayerBow")
+stagger = NodePath("../../PlayerActionStateMachine/PlayerStagger")
 
 [node name="PlayerActionStateMachine" type="Node" parent="StateMachineHolder" node_paths=PackedStringArray("partner", "pawn", "initial_state")]
 script = ExtResource("3_xkvhd")
@@ -1323,14 +1396,16 @@ partner = NodePath("../PlayerStateMachine")
 pawn = NodePath("../..")
 initial_state = NodePath("PlayerNeutral")
 
-[node name="PlayerNeutral" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("kick", "bow")]
+[node name="PlayerNeutral" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("kick", "bow", "stagger")]
 script = ExtResource("12_qol0d")
 kick = NodePath("../PlayerKick")
 bow = NodePath("../PlayerBow")
+stagger = NodePath("../PlayerStagger")
 
-[node name="PlayerKick" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate")]
+[node name="PlayerKick" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "stagger", "idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate")]
 script = ExtResource("13_cusvi")
 neutral = NodePath("../PlayerNeutral")
+stagger = NodePath("../PlayerStagger")
 idle = NodePath("../../PlayerStateMachine/PlayerIdle")
 run = NodePath("../../PlayerStateMachine/PlayerRun")
 fall = NodePath("../../PlayerStateMachine/PlayerFall")
@@ -1340,9 +1415,10 @@ ajump = NodePath("../../PlayerStateMachine/PlayerAJump")
 adash = NodePath("../../PlayerStateMachine/PlayerADash")
 nonestate = NodePath("../../PlayerStateMachine/PlayerNone")
 
-[node name="PlayerBow" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate")]
+[node name="PlayerBow" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "stagger", "idle", "run", "fall", "jump", "gdash", "ajump", "adash", "nonestate")]
 script = ExtResource("16_5ofav")
 neutral = NodePath("../PlayerNeutral")
+stagger = NodePath("../PlayerStagger")
 idle = NodePath("../../PlayerStateMachine/PlayerIdle")
 run = NodePath("../../PlayerStateMachine/PlayerRun")
 fall = NodePath("../../PlayerStateMachine/PlayerFall")
@@ -1350,6 +1426,11 @@ jump = NodePath("../../PlayerStateMachine/PlayerJump")
 gdash = NodePath("../../PlayerStateMachine/PlayerGDash")
 ajump = NodePath("../../PlayerStateMachine/PlayerAJump")
 adash = NodePath("../../PlayerStateMachine/PlayerADash")
+nonestate = NodePath("../../PlayerStateMachine/PlayerNone")
+
+[node name="PlayerStagger" type="Node" parent="StateMachineHolder/PlayerActionStateMachine" node_paths=PackedStringArray("neutral", "nonestate")]
+script = ExtResource("17_hogic")
+neutral = NodePath("../PlayerNeutral")
 nonestate = NodePath("../../PlayerStateMachine/PlayerNone")
 
 [node name="Timers" type="Node" parent="."]
@@ -1403,6 +1484,11 @@ process_callback = 0
 wait_time = 0.35
 one_shot = true
 
+[node name="InvincibilityTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 1.5
+one_shot = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -43)
 sprite_frames = SubResource("SpriteFrames_swuc4")
@@ -1423,7 +1509,7 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="KickBox" type="Area2D" parent="."]
 position = Vector2(47, -56)
-collision_layer = 2
+collision_layer = 0
 collision_mask = 4
 monitoring = false
 script = ExtResource("44_vl3yl")

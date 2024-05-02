@@ -1,15 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://djykh2ypj1v5a"]
+[gd_scene load_steps=12 format=3 uid="uid://djykh2ypj1v5a"]
 
 [ext_resource type="PackedScene" uid="uid://dbi0epoa6yfor" path="res://src/player/player.tscn" id="1_7glv8"]
 [ext_resource type="Script" path="res://src/sample_world.gd" id="1_lndhx"]
 [ext_resource type="PackedScene" uid="uid://o6iy86hrcc8p" path="res://src/sample_arrow.tscn" id="2_35swi"]
 [ext_resource type="Texture2D" uid="uid://byj4jf3qltycm" path="res://icon.svg" id="2_bue2f"]
 [ext_resource type="PackedScene" uid="uid://7k0fmijy83bf" path="res://src/sample_enemy.tscn" id="3_njgtq"]
+[ext_resource type="Script" path="res://src/damage_area.gd" id="6_n8x42"]
+[ext_resource type="Script" path="res://src/damage_setting.gd" id="7_df40h"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6wwee"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r55q2"]
 radius = 27.8927
+
+[sub_resource type="Resource" id="Resource_otlq1"]
+script = ExtResource("7_df40h")
+knockback_strength = 200.0
+damage_applied = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qxvn"]
+size = Vector2(121, 300)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_lndhx")
@@ -63,3 +73,14 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
 shape = SubResource("CircleShape2D_r55q2")
+
+[node name="Area2D4" type="Area2D" parent="."]
+position = Vector2(102, 305)
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("6_n8x42")
+damage_settings = SubResource("Resource_otlq1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4"]
+position = Vector2(50.5, 60)
+shape = SubResource("RectangleShape2D_4qxvn")

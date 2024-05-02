@@ -3,6 +3,7 @@ class_name PlayerBow
 
 @export_group("Transitions")
 @export var neutral: State = null
+@export var stagger: State = null
 
 @export_group("References")
 @export var idle: State = null
@@ -13,6 +14,7 @@ class_name PlayerBow
 @export var ajump: State = null
 @export var adash: State = null
 @export var nonestate: State = null
+
 
 # actively attacking
 var is_attacking:= false
@@ -74,6 +76,11 @@ func state_animated(anim_name: StringName) -> State:
 		#machine.partner.change_state(fall)
 		#is_attacking = false
 		#return neutral
+	return null
+
+func state_interrupt(message: String) -> State:
+	if message == "hurt":
+		return stagger
 	return null
 
 func state_exit() -> void:

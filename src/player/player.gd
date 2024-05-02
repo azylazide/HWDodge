@@ -21,9 +21,11 @@ class_name Player
 ## Initial action state on ready
 @export var initial_action_state: PlayerState
 
-@export_category("Platformer Values")
+@export_category("Player Values")
 ## Stores player specific movement related parameters
 @export var platformer_settings: PlatformerResource
+
+@export var player_details: PlayerDetailResource
 
 signal bow_fired(bowtype: StringName)
 
@@ -64,6 +66,12 @@ var is_kick_connected:= false
 
 var is_bow_charged:= false
 
+var is_inside_enemy_hazard:= false
+
+var is_invincible:= false
+
+var invincibility_tween: Tween = null
+
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
 @onready var action_sm: StateMachine = $StateMachineHolder/PlayerActionStateMachine
@@ -94,13 +102,19 @@ var is_bow_charged:= false
 
 @onready var bow_cooldown_timer: Timer = $Timers/BowCooldownTimer
 
+@onready var invincibility_timer: Timer = $Timers/InvincibilityTimer
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var animplayer: AnimationPlayer = $AnimationPlayer
 
 @onready var anim_tree: AnimationTree = $AnimationTree
 
+@onready var dodgebox: Area2D = $Dodgebox
+
 @onready var kick_box: Area2D = $KickBox
+
+@onready var hurtbox: Area2D = $Hurtbox
 
 ## If on floor on previous frame
 @onready var was_on_floor:= true
@@ -145,6 +159,8 @@ func _setup_timers() -> void:
 
 	bow_cooldown_timer.wait_time = platformer_settings.bow_cooldown_time
 
+	invincibility_timer.timeout.connect(invincible_reset)
+	invincibility_timer.wait_time = platformer_settings.invincibility_time
 
 ## Setup [AnimationTree]
 func _setup_anim() -> void:
@@ -153,6 +169,9 @@ func _setup_anim() -> void:
 
 func _setup_other() -> void:
 	kick_box.kick_connected.connect(func(): is_kick_connected = true)
+	dodgebox.area_entered.connect(func(area): is_inside_enemy_hazard = true)
+	dodgebox.area_exited.connect(func(area): is_inside_enemy_hazard = false)
+	hurtbox.area_entered.connect(func(hurtarea): hurt(hurtarea,hurtarea.damage_settings))
 
 func _ready() -> void:
 	_setup_movement()
@@ -228,7 +247,24 @@ func bow_charge_check(check: bool) -> void:
 func fire_bow() -> void:
 	bow_fired.emit(action_sm.current_state.prev_attack)
 	is_bow_charged = false
-	pass
+
+func hurt(hazard: Area2D, damage: DamageResource) -> void:
+	if not is_invincible:
+		printt("hurt",hazard,damage.damage_applied)
+		action_sm.machine_interrupt("hurt")
+		hurtbox.set_monitoring.call_deferred(false)
+
+func invincible_reset() -> void:
+	is_invincible = false
+	invincibility_tween.kill()
+	sprite.modulate.a = 1
+	hurtbox.set_monitoring.call_deferred(true)
+
+func invicibility_frames() -> Tween:
+	var tween = create_tween().set_loops()
+	tween.tween_property(sprite,"modulate:a",0.2,0.15)
+	tween.tween_property(sprite,"modulate:a",1,0.15)
+	return tween
 
 func debug_info() -> void:
 	DebugInfo.display_position(global_position)
@@ -236,3 +272,4 @@ func debug_info() -> void:
 	DebugInfo.display_movement_state(movement_sm)
 	DebugInfo.display_action_state(action_sm)
 	DebugInfo.display_animation(anim_sm)
+	DebugInfo.display_timers([bow_cooldown_timer,invincibility_timer])

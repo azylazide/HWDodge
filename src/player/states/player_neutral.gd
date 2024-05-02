@@ -4,6 +4,7 @@ class_name PlayerNeutral
 @export_group("Transitions")
 @export var kick: State = null
 @export var bow: State = null
+@export var stagger: State = null
 
 func state_physics(delta: float) -> State:
 	if Input.is_action_pressed("down"):
@@ -25,4 +26,9 @@ func state_input(event: InputEvent) -> State:
 	if event.is_action_pressed("bow") and player.bow_cooldown_timer.is_stopped():
 		return bow
 
+	return null
+
+func state_interrupt(message: String) -> State:
+	if message == "hurt":
+		return stagger
 	return null

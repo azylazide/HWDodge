@@ -1,6 +1,6 @@
 extends PlayerState
 
-@export_group("References")
+@export_group("Transitions")
 @export var idle: State = null
 @export var run: State = null
 @export var fall: State = null
@@ -9,8 +9,11 @@ extends PlayerState
 @export var ajump: State = null
 @export var adash: State = null
 @export var nonestate: State = null
+
+@export_group("References")
 @export var kick: State = null
 @export var bow: State = null
+@export var stagger: State = null
 
 func state_enter() -> void:
 	# kick state controlled enter
@@ -41,6 +44,9 @@ func state_enter() -> void:
 		elif machine.previous_state == adash:
 			if abs(player.velocity.x) > 0:
 				player.velocity.x = -player.face_direction*300
+
+	elif machine.partner.current_state == stagger:
+		player.velocity = Vector2(-player.face_direction,-1).normalized()*400
 
 
 func state_physics(delta: float) -> State:
@@ -83,5 +89,29 @@ func state_physics(delta: float) -> State:
 				player.was_on_floor = player.check_floor()
 				player.apply_movement(player.face_direction)
 				player.on_floor = player.check_floor()
+
+	elif machine.partner.current_state == stagger:
+		player.velocity.y += 0.1*player.fall_gravity*delta
+
+		player.was_on_floor = player.check_floor()
+		player.apply_movement(player.face_direction)
+		player.on_floor = player.check_floor()
+
+	return null
+
+func state_exit() -> void:
+	# stagger hasnt received the change state yet
+	if machine.partner.current_state == stagger:
+		player.velocity.x = 0
+		player.velocity.y = maxf(player.velocity.y,0)
+
+func state_animated(anim_name: StringName) -> State:
+	if anim_name == &"stagger":
+		if player.on_floor:
+			if player.get_direction():
+				return run
+			else:
+				return idle
+		return fall
 
 	return null
