@@ -70,19 +70,17 @@ func state_input(event: InputEvent) -> State:
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"lowkick",&"normalkick"]:
 		machine.partner.change_state(machine.partner.previous_state)
-		is_attacking = false
 		return neutral
 	elif anim_name in [&"highkick",&"topkick"]:
 		machine.partner.change_state(fall)
-		is_attacking = false
 		return neutral
 	return null
 
 func state_interrupt(message: String) -> State:
 	if message == "hurt":
-		is_attacking = false
 		return stagger
 	return null
 
 func state_exit() -> void:
+	is_attacking = false
 	player.kick_cooldown_timer.start()

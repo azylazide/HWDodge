@@ -66,11 +66,9 @@ func state_input(event: InputEvent) -> State:
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"idlebow",&"movebow"]:
 		machine.partner.change_state(idle)
-		is_attacking = false
 		return neutral
 	elif anim_name == &"airbow":
 		machine.partner.change_state(fall)
-		is_attacking = false
 		return neutral
 	#elif anim_name in [&"highkick",&"topkick"]:
 		#machine.partner.change_state(fall)
@@ -80,10 +78,10 @@ func state_animated(anim_name: StringName) -> State:
 
 func state_interrupt(message: String) -> State:
 	if message == "hurt":
-		is_attacking = false
 		return stagger
 	return null
 
 func state_exit() -> void:
+	is_attacking = false
 	player.bow_cooldown_timer.start()
 	pass
