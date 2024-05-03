@@ -1,4 +1,5 @@
 extends Area2D
+class_name KickBox
 
 signal kick_connected
 
