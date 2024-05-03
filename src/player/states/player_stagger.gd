@@ -7,6 +7,7 @@ extends PlayerState
 @export var nonestate: State = null
 
 func state_enter() -> void:
+	Globals.request_slowdown(0.1,0.4)
 	player.anim_sm.travel(&"stagger")
 	player.is_invincible = true
 	machine.partner.change_state(nonestate)

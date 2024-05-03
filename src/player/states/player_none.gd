@@ -105,6 +105,9 @@ func state_exit() -> void:
 		player.velocity.x = 0
 		player.velocity.y = maxf(player.velocity.y,0)
 
+	elif machine.partner.current_state == kick:
+		player.is_kick_connected = false
+
 func state_animated(anim_name: StringName) -> State:
 	if anim_name == &"stagger":
 		if player.on_floor:

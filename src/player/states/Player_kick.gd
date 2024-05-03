@@ -78,6 +78,8 @@ func state_animated(anim_name: StringName) -> State:
 
 func state_interrupt(message: String) -> State:
 	if message == "hurt":
+		player.is_kick_frame = false
+		player.is_kick_connected = false
 		return stagger
 	return null
 

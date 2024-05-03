@@ -76,6 +76,7 @@ var invincibility_tween: Tween = null
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
 @onready var action_sm: StateMachine = $StateMachineHolder/PlayerActionStateMachine
 
+#region timers
 ## Jump buffer timer
 @onready var jump_buffer_timer:= $Timers/JumpBufferTimer as Timer
 
@@ -103,6 +104,8 @@ var invincibility_tween: Tween = null
 @onready var bow_cooldown_timer: Timer = $Timers/BowCooldownTimer
 
 @onready var invincibility_timer: Timer = $Timers/InvincibilityTimer
+
+#endregion
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
