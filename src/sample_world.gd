@@ -2,7 +2,7 @@ extends Node2D
 
 @export var arrow_scn: PackedScene
 
-@onready var player: Player = $CharacterBody2D
+@onready var player: Player = $Player
 
 func _ready() -> void:
 	player.bow_fired.connect(spawn_arrow)
