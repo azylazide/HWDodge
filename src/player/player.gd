@@ -246,26 +246,32 @@ func reset_kick_timer() -> void:
 	high_kick_buffer_timer.stop()
 	down_buffer = false
 
+## Kick check controlled by animation to determine if currently in kick frames of the animation
 func kick_check(check: bool) -> void:
 	is_kick_frame = check
 
+## Enable or disable monitoring/monitorable of [KickBox]
 func kick_toggle(toggle: bool) -> void:
 	kick_box.monitorable = toggle
 	kick_box.monitoring = toggle
 
+## Bow charge check controlled by animation to determine if currently in charge frames of the animation
 func bow_charge_check(check: bool) -> void:
 	is_bow_charged = true
 
+## Fire bow as controlled by animation
 func fire_bow() -> void:
 	bow_fired.emit(action_sm.current_state.prev_attack)
 	is_bow_charged = false
 
+## [Hurtbox] controlled function to transition to hurt state
 func hurt(hazard: Area2D, damage: DamageResource) -> void:
 	if not is_invincible:
 		printt("hurt",hazard,damage.damage_applied)
 		action_sm.machine_interrupt("hurt")
 		hurtbox.set_monitoring.call_deferred(false)
 
+## [Timer] controlled function to reset invincibility conditions
 func invincible_reset() -> void:
 	is_invincible = false
 	invincibility_tween.kill()
