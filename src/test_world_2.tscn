@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://3afhnm7wqta5"]
+[gd_scene load_steps=14 format=3 uid="uid://3afhnm7wqta5"]
 
 [ext_resource type="Script" path="res://src/sample_world.gd" id="1_hxkj1"]
 [ext_resource type="PackedScene" uid="uid://o6iy86hrcc8p" path="res://src/sample_arrow.tscn" id="2_juhim"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/damage_area.gd" id="5_f2x61"]
 [ext_resource type="Script" path="res://src/damage_setting.gd" id="6_2jp57"]
 [ext_resource type="Script" path="res://src/sample_enemy_parrybox.gd" id="7_flo6v"]
+[ext_resource type="Script" path="res://src/base_rigid_enemy.gd" id="7_icw45"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vv36c"]
 
@@ -17,6 +18,9 @@ damage_applied = 20
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fsabu"]
 size = Vector2(121, 300)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l2k6h"]
+radius = 57.7235
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jxhfq"]
 radius = 27.8927
@@ -50,11 +54,24 @@ damage_settings = SubResource("Resource_wleke")
 position = Vector2(50.5, 60)
 shape = SubResource("RectangleShape2D_fsabu")
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(811, 452)
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(1017, 449)
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("7_icw45")
+max_speed = 800.0
+max_fall_speed = 800.0
+knockback_speed = 500.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_l2k6h")
+
+[node name="ParryBox" type="Area2D" parent="RigidBody2D" node_paths=PackedStringArray("enemy")]
+position = Vector2(-60, -33)
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("7_flo6v")
+enemy = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/ParryBox"]
 shape = SubResource("CircleShape2D_jxhfq")

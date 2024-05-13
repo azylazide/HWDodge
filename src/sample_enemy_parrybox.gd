@@ -1,9 +1,9 @@
 extends Area2D
 class_name ParryBox
 
-@export var enemy: CharacterBody2D
+@export var enemy: RigidBody2D
 
-signal request_knocback
+signal request_knockback
 
 var invincible:= false
 
@@ -22,12 +22,12 @@ func knockback(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_i
 	var local_shape_owner: int = shape_find_owner(local_shape_index)
 	var local_shape_node: CollisionShape2D = shape_owner_get_owner(local_shape_owner)
 
-	var knockback_direction = other_shape_node.global_position.direction_to(local_shape_node.global_position).project(Vector2.RIGHT).normalized().x
+	var knockback_direction:= other_shape_node.global_position.direction_to(local_shape_node.global_position)
 	if area is KickBox:
-		request_knocback.emit()
-		print(area)
-		printt(other_shape_node.global_position,local_shape_node.global_position,get_tree().get_frame())
-		print(knockback_direction)
+		request_knockback.emit(knockback_direction)
+		#print(area)
+		#printt(other_shape_node.global_position,local_shape_node.global_position,get_tree().get_frame())
+		#print(knockback_direction)
 		enemy.invincible = true
 		await get_tree().create_timer(3).timeout
 		enemy.invincible = false

@@ -3,7 +3,8 @@ extends RigidBody2D
 var invincible:= false
 
 func _ready() -> void:
-	$Area2D2.area_shape_entered.connect(knockback)
+	#$Area2D.area_shape_entered.connect(knockback)
+	pass
 
 func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_O):
