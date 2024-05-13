@@ -240,6 +240,17 @@ func ground_reset() -> void:
 func jump_reset() -> void:
 	jump_buffer_timer.stop()
 
+func resolve_animations() -> void:
+	var anim_list: Array[String] = [
+		"idle","run","fall","jump",
+		"gdash","adash",
+		"hurt",
+		"idlebow","movebow","airbow",
+		"lowkick","normalkick","highkick","topkick"]
+	for anim_name in anim_list:
+		#anim_tree.set("parameters/%s/blend_position" %anim_name,face_direction)
+		pass
+
 func reset_kick_timer() -> void:
 	low_kick_buffer_timer.stop()
 	top_kick_buffer_timer.stop()
