@@ -72,6 +72,8 @@ var is_invincible:= false
 
 var invincibility_tween: Tween = null
 
+var additional_velocity:= Vector2.ZERO
+
 ## Statemachine
 @onready var movement_sm: StateMachine = $StateMachineHolder/PlayerStateMachine
 @onready var action_sm: StateMachine = $StateMachineHolder/PlayerActionStateMachine
@@ -207,6 +209,9 @@ func get_direction() -> float:
 
 ## Applies move and slide and updates face_direction
 func apply_movement(dir: float) -> void:
+
+	velocity += additional_velocity
+
 	move_and_slide()
 
 	if dir == 0:

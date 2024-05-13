@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=118 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -44,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://cmje5beadm346" path="res://assets/alpha fall/frame0013.png" id="19_x42pw"]
 [ext_resource type="Texture2D" uid="uid://6b4al56rjv7a" path="res://assets/alpha normalkick/frame0002.png" id="20_ftm58"]
 [ext_resource type="Texture2D" uid="uid://bpapoprge1wos" path="res://assets/alpha normalkick/frame0007.png" id="21_qpy34"]
+[ext_resource type="Texture2D" uid="uid://d1n7j3gkioey8" path="res://assets/hw dodge alpha dash.png" id="22_2yewj"]
 [ext_resource type="Texture2D" uid="uid://c21o70r8nqrs1" path="res://assets/alpha jump/frame0000.png" id="25_hpj8b"]
 [ext_resource type="Texture2D" uid="uid://bd0rrrefojw07" path="res://assets/alpha jump/frame0006.png" id="26_yfhpf"]
 [ext_resource type="Texture2D" uid="uid://dtt6ofg7y8sme" path="res://assets/alpha idlebow/frame0000.png" id="30_s0qin"]
@@ -79,7 +80,7 @@ low_kick_buffer_time = 0.12
 high_kick_buffer_time = 0.1
 top_kick_buffer_time = 0.1
 kick_knockback_time = 0.5
-bow_cooldown_time = 0.12
+bow_cooldown_time = 0.01
 invincibility_time = 4.0
 
 [sub_resource type="Resource" id="Resource_20l6p"]
@@ -114,6 +115,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"airbow",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_2yewj")
+}],
+"loop": true,
+"name": &"dash",
 "speed": 5.0
 }, {
 "frames": [{
@@ -1234,10 +1243,38 @@ tracks/7/keys = {
 "values": [false, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_esju1"]
+resource_name = "dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
 _data = {
 "RESET": SubResource("Animation_rdrin"),
 "airbow": SubResource("Animation_ysqnn"),
+"dash": SubResource("Animation_esju1"),
 "fall": SubResource("Animation_l0t7t"),
 "highkick": SubResource("Animation_v8ajt"),
 "idle": SubResource("Animation_1dl57"),
@@ -1253,6 +1290,9 @@ _data = {
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8onc"]
 animation = &"airbow"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_26v6c"]
+animation = &"dash"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hyooh"]
 animation = &"fall"
@@ -1310,12 +1350,30 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hkmln"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oggxa"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ybr1w"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8khfs"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gc8nu"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_us0gl"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_koiak"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_brnh4"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t18fe"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hsi1y"]
 states/Start/position = Vector2(171, 100)
 states/airbow/node = SubResource("AnimationNodeAnimation_n8onc")
 states/airbow/position = Vector2(946, 200.146)
+states/dash/node = SubResource("AnimationNodeAnimation_26v6c")
+states/dash/position = Vector2(154, -35.854)
 states/fall/node = SubResource("AnimationNodeAnimation_hyooh")
-states/fall/position = Vector2(424, -43.854)
+states/fall/position = Vector2(434, -142.854)
 states/highkick/node = SubResource("AnimationNodeAnimation_hhh8p")
 states/highkick/position = Vector2(790, 268)
 states/idle/node = SubResource("AnimationNodeAnimation_yblhh")
@@ -1323,7 +1381,7 @@ states/idle/position = Vector2(327, 100)
 states/idlebow/node = SubResource("AnimationNodeAnimation_sbvmt")
 states/idlebow/position = Vector2(634, 200.146)
 states/jump/node = SubResource("AnimationNodeAnimation_bprk0")
-states/jump/position = Vector2(629, -43.854)
+states/jump/position = Vector2(717, -64.854)
 states/lowkick/node = SubResource("AnimationNodeAnimation_8q603")
 states/lowkick/position = Vector2(473, 268)
 states/movebow/node = SubResource("AnimationNodeAnimation_f6dtq")
@@ -1336,8 +1394,8 @@ states/stagger/node = SubResource("AnimationNodeAnimation_8gri7")
 states/stagger/position = Vector2(320, 205.146)
 states/topkick/node = SubResource("AnimationNodeAnimation_f54hi")
 states/topkick/position = Vector2(946, 268)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_6ikvd"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_h6rff"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_t8mj5"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_12n4x"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_bx1pw"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_143n6"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_tq8hr"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_avuum"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_67jdb"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_n7yes"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_hkmln")]
-graph_offset = Vector2(40, 122.146)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_6ikvd"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_h6rff"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_t8mj5"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_12n4x"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_bx1pw"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_143n6"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_tq8hr"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_avuum"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_67jdb"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_n7yes"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_hkmln"), "idle", "dash", SubResource("AnimationNodeStateMachineTransition_oggxa"), "run", "dash", SubResource("AnimationNodeStateMachineTransition_ybr1w"), "fall", "dash", SubResource("AnimationNodeStateMachineTransition_8khfs"), "jump", "dash", SubResource("AnimationNodeStateMachineTransition_gc8nu"), "dash", "run", SubResource("AnimationNodeStateMachineTransition_us0gl"), "dash", "idle", SubResource("AnimationNodeStateMachineTransition_koiak"), "dash", "fall", SubResource("AnimationNodeStateMachineTransition_brnh4"), "dash", "jump", SubResource("AnimationNodeStateMachineTransition_t18fe")]
+graph_offset = Vector2(-109, -100.854)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xmax"]
 radius = 35.0

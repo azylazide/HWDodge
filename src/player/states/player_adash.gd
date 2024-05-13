@@ -14,7 +14,7 @@ func state_enter() -> void:
 	player.dash_timer.start()
 	#player.dash_ghost_tweener()
 	player.can_adash = false
-	#player.anim_sm.travel("adash")
+	player.anim_sm.travel("dash")
 
 func state_exit() -> void:
 	super()

@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var invincible:= false
+
 func _ready() -> void:
 	$Area2D2.area_shape_entered.connect(knockback)
 
@@ -20,3 +22,7 @@ func knockback(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_i
 		print(area)
 		printt(other_shape_node.global_position,local_shape_node.global_position)
 		print(knockback_direction)
+
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	state.angular_velocity = 0
+	state.linear_velocity = Vector2(clampf(state.linear_velocity.x,-200,200),state.linear_velocity.y)

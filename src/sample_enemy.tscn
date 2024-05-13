@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/sample_enemy.gd" id="1_34xib"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_or441"]
+friction = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_laim6"]
 radius = 90.0
