@@ -249,6 +249,10 @@ func reset_kick_timer() -> void:
 func kick_check(check: bool) -> void:
 	is_kick_frame = check
 
+func kick_toggle(toggle: bool) -> void:
+	kick_box.monitorable = toggle
+	kick_box.monitoring = toggle
+
 func bow_charge_check(check: bool) -> void:
 	is_bow_charged = true
 
