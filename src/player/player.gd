@@ -189,6 +189,8 @@ func _ready() -> void:
 	action_sm.initial_state = initial_action_state
 	action_sm.machine_init()
 
+	add_to_group("player")
+
 func _physics_process(delta: float) -> void:
 	movement_sm.machine_physics(delta)
 	action_sm.machine_physics(delta)
