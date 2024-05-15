@@ -49,3 +49,7 @@ shape = SubResource("RectangleShape2D_fsabu")
 
 [node name="RigidBody2D" parent="." instance=ExtResource("7_3olj6")]
 position = Vector2(1010, 446)
+
+[node name="RigidBody2D2" parent="." instance=ExtResource("7_3olj6")]
+position = Vector2(736, 449)
+max_speed = 0.0
