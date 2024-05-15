@@ -1036,7 +1036,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.16),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(59, -16)]
@@ -1068,10 +1068,10 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.16, 0.18),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
-"args": [true],
+"args": [false],
 "method": &"kick_toggle"
 }, {
-"args": [false],
+"args": [true],
 "method": &"kick_toggle"
 }, {
 "args": [false],
@@ -1138,7 +1138,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.16),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(-59, -16)]
@@ -1170,10 +1170,10 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.16, 0.18),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
-"args": [true],
+"args": [false],
 "method": &"kick_toggle"
 }, {
-"args": [false],
+"args": [true],
 "method": &"kick_toggle"
 }, {
 "args": [false],
@@ -1240,7 +1240,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(60, -45)]
@@ -1342,7 +1342,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(-60, -45)]
@@ -1456,7 +1456,7 @@ tracks/4/path = NodePath("KickBox:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(48, -39)]
@@ -1573,7 +1573,7 @@ tracks/4/path = NodePath("KickBox:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(-48, -39)]
@@ -2254,7 +2254,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(47, -56)]
@@ -2356,7 +2356,7 @@ tracks/3/path = NodePath("KickBox:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(-47, -56)]
