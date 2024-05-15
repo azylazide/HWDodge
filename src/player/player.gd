@@ -264,8 +264,8 @@ func kick_check(check: bool) -> void:
 
 ## Enable or disable monitoring/monitorable of [KickBox]
 func kick_toggle(toggle: bool) -> void:
-	kick_box.monitorable = toggle
-	kick_box.monitoring = toggle
+	kick_box.set_monitorable.call_deferred(toggle)
+	kick_box.set_monitoring.call_deferred(toggle)
 
 ## Bow charge check controlled by animation to determine if currently in charge frames of the animation
 func bow_charge_check(check: bool) -> void:

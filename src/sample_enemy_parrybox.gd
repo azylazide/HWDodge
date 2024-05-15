@@ -5,8 +5,6 @@ class_name ParryBox
 
 signal request_knockback
 
-var invincible:= false
-
 func _ready() -> void:
 	area_shape_entered.connect(knockback)
 
@@ -29,5 +27,7 @@ func knockback(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_i
 		#printt(other_shape_node.global_position,local_shape_node.global_position,get_tree().get_frame())
 		#print(knockback_direction)
 		enemy.invincible = true
+		set_monitorable.call_deferred(false)
 		await get_tree().create_timer(3).timeout
+		set_monitorable.call_deferred(true)
 		enemy.invincible = false
