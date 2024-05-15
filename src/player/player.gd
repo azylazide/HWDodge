@@ -280,6 +280,7 @@ func fire_bow() -> void:
 func hurt(hazard: Area2D, damage: DamageResource) -> void:
 	if not is_invincible:
 		printt("hurt",hazard,damage.damage_applied)
+		face_direction = -signf(hazard.get_node("CollisionShape2D").global_position.direction_to(hurtbox.global_position).x)
 		action_sm.machine_interrupt("hurt")
 		hurtbox.set_monitoring.call_deferred(false)
 
