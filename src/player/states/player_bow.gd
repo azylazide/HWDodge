@@ -64,10 +64,10 @@ func state_input(event: InputEvent) -> State:
 	return null
 
 func state_animated(anim_name: StringName) -> State:
-	if anim_name in [&"idlebow",&"movebow"]:
+	if anim_name in [&"left_idlebow",&"left_movebow",&"right_idlebow",&"right_movebow"]:
 		machine.partner.change_state(idle)
 		return neutral
-	elif anim_name == &"airbow":
+	elif anim_name in [&"left_airbow",&"right_airbow"]:
 		machine.partner.change_state(fall)
 		return neutral
 	#elif anim_name in [&"highkick",&"topkick"]:

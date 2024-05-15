@@ -109,7 +109,7 @@ func state_exit() -> void:
 		player.is_kick_connected = false
 
 func state_animated(anim_name: StringName) -> State:
-	if anim_name == &"stagger":
+	if anim_name in [&"left_stagger",&"right_stagger"]:
 		if player.on_floor:
 			if player.get_direction():
 				return run

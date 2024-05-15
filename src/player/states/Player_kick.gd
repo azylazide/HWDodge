@@ -68,10 +68,10 @@ func state_input(event: InputEvent) -> State:
 	return null
 
 func state_animated(anim_name: StringName) -> State:
-	if anim_name in [&"lowkick",&"normalkick"]:
+	if anim_name in [&"left_lowkick",&"left_normalkick",&"right_lowkick",&"right_normalkick"]:
 		machine.partner.change_state(machine.partner.previous_state)
 		return neutral
-	elif anim_name in [&"highkick",&"topkick"]:
+	elif anim_name in [&"left_highkick",&"left_topkick",&"right_highkick",&"right_topkick"]:
 		machine.partner.change_state(fall)
 		return neutral
 	return null

@@ -192,6 +192,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	movement_sm.machine_physics(delta)
 	action_sm.machine_physics(delta)
+	resolve_animations()
 
 	debug_info.call_deferred()
 
@@ -243,12 +244,12 @@ func jump_reset() -> void:
 func resolve_animations() -> void:
 	var anim_list: Array[String] = [
 		"idle","run","fall","jump",
-		"gdash","adash",
-		"hurt",
+		"dash",
+		"stagger",
 		"idlebow","movebow","airbow",
 		"lowkick","normalkick","highkick","topkick"]
 	for anim_name in anim_list:
-		#anim_tree.set("parameters/%s/blend_position" %anim_name,face_direction)
+		anim_tree.set("parameters/%s/blend_position" %anim_name,face_direction)
 		pass
 
 func reset_kick_timer() -> void:
