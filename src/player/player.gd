@@ -173,7 +173,7 @@ func _setup_anim() -> void:
 	anim_tree.active = true
 
 func _setup_other() -> void:
-	kick_box.kick_connected.connect(func(): is_kick_connected = true)
+	kick_box.kick_connected.connect(func(): is_kick_connected = true; print("KICK CONNECTED"))
 	dodgebox.area_entered.connect(func(area): is_inside_enemy_hazard = true)
 	dodgebox.area_exited.connect(func(area): is_inside_enemy_hazard = false)
 	hurtbox.area_entered.connect(func(hurtarea): hurt(hurtarea,hurtarea.damage_settings))

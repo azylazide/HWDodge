@@ -55,7 +55,8 @@ position = Vector2(736, 449)
 max_speed = 0.0
 
 [node name="RigidBody2D3" parent="." instance=ExtResource("7_3olj6")]
-position = Vector2(273, 446)
+position = Vector2(240, 438)
+gravity_scale = 0.0
 max_speed = 0.0
 
 [node name="ParryBox" parent="RigidBody2D3" index="1" node_paths=PackedStringArray("enemy")]
