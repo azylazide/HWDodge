@@ -22,6 +22,11 @@ class_name Player
 @export var initial_action_state: PlayerState
 
 @export_category("Player Values")
+@export_group("Live flags")
+@export var is_kick_frame:= false
+@export var is_bow_charged:= false
+
+@export_group("")
 ## Stores player specific movement related parameters
 @export var platformer_settings: PlatformerResource
 
@@ -63,8 +68,6 @@ var inputbuffer: Array[InputEventKey] = []
 var down_buffer:= false
 
 var is_kick_connected:= false
-
-var is_bow_charged:= false
 
 var is_inside_enemy_hazard:= false
 
@@ -129,8 +132,6 @@ var additional_velocity:= Vector2.ZERO
 
 ## Double jump is allowed
 @onready var can_ajump:= true
-
-@onready var is_kick_frame:= false
 
 ## Setup movement values
 func _setup_movement() -> void:
@@ -266,6 +267,7 @@ func kick_check(check: bool) -> void:
 
 ## Enable or disable monitoring/monitorable of [KickBox]
 func kick_toggle(toggle: bool) -> void:
+	#kick_box.get_node("CollisionShape2D").set_disabled(toggle)
 	kick_box.set_monitorable.call_deferred(toggle)
 	kick_box.set_monitoring.call_deferred(toggle)
 
