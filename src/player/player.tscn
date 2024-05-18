@@ -396,6 +396,18 @@ tracks/7/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("KickBox/CollisionShape2D:disabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_eskld"]
 resource_name = "left_airbow"
@@ -1968,6 +1980,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("KickBox/CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.16, 0.18),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_gkb08"]
 resource_name = "right_movebow"
@@ -2160,6 +2184,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("KickBox/CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.22),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_4eefi"]
@@ -2647,7 +2683,7 @@ states/stagger/position = Vector2(1056, 82.146)
 states/topkick/node = SubResource("AnimationNodeBlendSpace1D_7b7re")
 states/topkick/position = Vector2(872, 26.146)
 transitions = ["idle", "run", SubResource("AnimationNodeStateMachineTransition_4rtns"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8swhw"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_qo8yy"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_daemm"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_p38vj"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_15wyb"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_6f58u"), "run", "dash", SubResource("AnimationNodeStateMachineTransition_n3x6o"), "idle", "dash", SubResource("AnimationNodeStateMachineTransition_8qvmp"), "dash", "idle", SubResource("AnimationNodeStateMachineTransition_37koq"), "dash", "run", SubResource("AnimationNodeStateMachineTransition_5xeb5"), "dash", "fall", SubResource("AnimationNodeStateMachineTransition_q1yrq"), "dash", "jump", SubResource("AnimationNodeStateMachineTransition_vygh8"), "fall", "dash", SubResource("AnimationNodeStateMachineTransition_dommd"), "jump", "dash", SubResource("AnimationNodeStateMachineTransition_8w1nl"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_ofphl"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_87raw"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_jipc3"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_l8afk")]
-graph_offset = Vector2(-43, -259.854)
+graph_offset = Vector2(-43, -186.07)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xmax"]
 radius = 35.0
@@ -2884,7 +2920,7 @@ parameters/highkick/blend_position = 0
 parameters/idle/blend_position = 0.0
 parameters/idlebow/blend_position = 0
 parameters/jump/blend_position = 0
-parameters/lowkick/blend_position = 0
+parameters/lowkick/blend_position = 0.0
 parameters/movebow/blend_position = 0
 parameters/normalkick/blend_position = 0
 parameters/run/blend_position = 0.213213
@@ -2895,12 +2931,11 @@ parameters/topkick/blend_position = 0
 position = Vector2(47, -56)
 collision_layer = 2
 collision_mask = 4
-monitoring = false
-monitorable = false
 script = ExtResource("44_vl3yl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KickBox"]
 shape = SubResource("CircleShape2D_8xmax")
+disabled = true
 
 [node name="ArrowSpawn" type="Marker2D" parent="."]
 

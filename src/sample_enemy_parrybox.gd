@@ -9,6 +9,7 @@ func _ready() -> void:
 	area_shape_entered.connect(knockback)
 
 func knockback(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	print("area entered")
 	if enemy.invincible:
 		return
 
