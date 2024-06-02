@@ -27,7 +27,7 @@ scale = Vector2(8.92969, 1.09375)
 texture = ExtResource("4_jmbet")
 
 [node name="Area2D" parent="." instance=ExtResource("5_lqcis")]
-position = Vector2(698, 499)
+position = Vector2(699, 488)
 
 [node name="Area2D2" parent="." instance=ExtResource("5_lqcis")]
 position = Vector2(856, 469)
