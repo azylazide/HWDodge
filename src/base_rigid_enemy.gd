@@ -6,13 +6,20 @@ class_name BaseRigidEnemy
 
 @export var knockback_speed:=100.0
 
-var invincible:= false
+var invincible:= false:
+	set(val):
+		if val:
+			modulate = modulate.darkened(0.5)
+		else:
+			modulate = default_color
 
 @onready var parrybox: ParryBox = $ParryBox
 
 @onready var player: Player = get_tree().get_nodes_in_group("player")[0]
 
 @onready var state_machine: StateMachine = $StateMachine
+
+var default_color = modulate
 
 func _ready() -> void:
 	parrybox.request_knockback.connect(apply_knockback)
