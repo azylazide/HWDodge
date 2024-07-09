@@ -12,6 +12,7 @@ var invincible:= false:
 			modulate = modulate.darkened(0.5)
 		else:
 			modulate = default_color
+		invincible = val
 
 @onready var parrybox: ParryBox = $ParryBox
 
