@@ -25,22 +25,37 @@ func machine_init() -> void:
 	print("%s Current: %s" %[self,current_state])
 
 func machine_process(delta: float) -> void:
+	if not is_instance_valid(current_state):
+		return
+
 	var new_state: State = current_state.state_process(delta)
 	change_state(new_state)
 
 func machine_physics(delta: float) -> void:
+	if not is_instance_valid(current_state):
+		return
+
 	var new_state: State = current_state.state_physics(delta)
 	change_state(new_state)
 
 func machine_input(event: InputEvent) -> void:
+	if not is_instance_valid(current_state):
+		return
+
 	var new_state: State = current_state.state_input(event)
 	change_state(new_state)
 
 func machine_on_animation_signaled(anim_name: StringName) -> void:
+	if not is_instance_valid(current_state):
+		return
+
 	var new_state: State = current_state.state_animated(anim_name)
 	change_state(new_state)
 
 func machine_interrupt(message: String) -> void:
+	if not is_instance_valid(current_state):
+		return
+
 	var new_state: State = current_state.state_interrupt(message)
 	change_state(new_state)
 
