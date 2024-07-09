@@ -39,6 +39,8 @@ func _draw() -> void:
 func _physics_process(delta: float) -> void:
 	state_machine.machine_physics(delta)
 	queue_redraw()
+	if is_instance_valid(state_machine.current_state):
+		%Label.text = str(state_machine.current_state.name)
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	state_machine.machine_forces(state)
