@@ -198,6 +198,7 @@ func _physics_process(delta: float) -> void:
 	resolve_animations()
 
 	debug_info.call_deferred()
+	print($KickBox/CollisionShape2D.disabled)
 
 func _unhandled_input(event: InputEvent) -> void:
 	movement_sm.machine_input(event)
