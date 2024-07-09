@@ -22,6 +22,12 @@ var invincible:= false:
 
 var default_color = modulate
 
+var health:= 100:
+	set(val):
+		health = val
+		if health <= 0:
+			queue_free()
+
 func _ready() -> void:
 	parrybox.request_knockback.connect(apply_knockback)
 	state_machine.machine_init()
@@ -41,3 +47,7 @@ func apply_knockback(knockback_direction: Vector2) -> void:
 	state_machine.machine_interrupt("hurt")
 	var impulse:= knockback_speed*Vector2.UP.rotated(sign(knockback_direction.x)*PI/4)
 	apply_central_impulse(impulse)
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	health -= 10

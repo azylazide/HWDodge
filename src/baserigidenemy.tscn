@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://5dw8kxd0u1fv"]
+[gd_scene load_steps=10 format=3 uid="uid://5dw8kxd0u1fv"]
 
 [ext_resource type="Script" path="res://src/base_rigid_enemy.gd" id="1_jidxe"]
 [ext_resource type="Script" path="res://src/sample_enemy_parrybox.gd" id="2_udssa"]
@@ -14,6 +14,9 @@ radius = 57.7235
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jxhfq"]
 radius = 27.8927
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qabub"]
+radius = 65.0692
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 4
@@ -50,3 +53,12 @@ knockback_state = NodePath("../Knockback")
 [node name="Knockback" type="Node" parent="StateMachine" node_paths=PackedStringArray("chase")]
 script = ExtResource("5_7fu8x")
 chase = NodePath("../Chase")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 80
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_qabub")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
