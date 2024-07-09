@@ -25,6 +25,7 @@ var default_color = modulate
 var health:= 100:
 	set(val):
 		health = val
+		%TextureProgressBar.value = health
 		if health <= 0:
 			queue_free()
 

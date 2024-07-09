@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://5dw8kxd0u1fv"]
+[gd_scene load_steps=13 format=3 uid="uid://5dw8kxd0u1fv"]
 
 [ext_resource type="Script" path="res://src/base_rigid_enemy.gd" id="1_jidxe"]
 [ext_resource type="Script" path="res://src/sample_enemy_parrybox.gd" id="2_udssa"]
@@ -17,6 +17,19 @@ radius = 27.8927
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qabub"]
 radius = 65.0692
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqsie"]
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrphm"]
+bg_color = Color(0, 0.721569, 0.258824, 1)
+
+[sub_resource type="Theme" id="Theme_onblo"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_eqsie")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_mrphm")
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_layer = 4
@@ -60,5 +73,22 @@ collision_mask = 80
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_qabub")
+
+[node name="TextureProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -108.0
+offset_right = 64.0
+offset_bottom = -81.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_onblo")
+value = 100.0
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
