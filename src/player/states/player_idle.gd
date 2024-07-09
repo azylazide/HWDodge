@@ -12,7 +12,10 @@ func state_enter() -> void:
 	super()
 	player.ground_reset()
 	#player.animplayer.play("idle")
-	player.anim_sm.travel("idle")
+	if player.movement_sm.previous_state == fall:
+		player.anim_sm.travel("land")
+	else:
+		player.anim_sm.travel("idle")
 	player.velocity = Vector2.ZERO
 
 func state_physics(delta: float) -> State:

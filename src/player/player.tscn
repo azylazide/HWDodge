@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://dbi0epoa6yfor"]
+[gd_scene load_steps=168 format=3 uid="uid://dbi0epoa6yfor"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_xxqp4"]
 [ext_resource type="Script" path="res://src/player/states/playerstatemachineholder.gd" id="2_ed77f"]
@@ -55,8 +55,11 @@
 [ext_resource type="Texture2D" uid="uid://bdb5ljjs5ebeo" path="res://assets/alpha movebow/frame0002.png" id="35_h2jvq"]
 [ext_resource type="Texture2D" uid="uid://bip8jiavw12xh" path="res://assets/alpha movebow/frame0006.png" id="36_ug0fp"]
 [ext_resource type="Texture2D" uid="uid://f7cvr86w4q2f" path="res://assets/alpha movebow/frame0010.png" id="37_y0l30"]
+[ext_resource type="Texture2D" uid="uid://kvuj3thow6ga" path="res://assets/alpha land/frame0000.png" id="39_j6a54"]
 [ext_resource type="Texture2D" uid="uid://bc36clss7la1n" path="res://assets/alpha topkick/frame0000.png" id="40_6s42r"]
+[ext_resource type="Texture2D" uid="uid://5ju0adjyn8ky" path="res://assets/alpha land/frame0003.png" id="40_e433k"]
 [ext_resource type="Texture2D" uid="uid://jlgs2u0hfvyy" path="res://assets/alpha topkick/frame0007.png" id="41_cjvqv"]
+[ext_resource type="Texture2D" uid="uid://ce5v65q7ihihk" path="res://assets/alpha land/frame0008.png" id="41_crfgl"]
 [ext_resource type="Texture2D" uid="uid://8dto32bg4chy" path="res://assets/alpha topkick/frame0009.png" id="42_h447r"]
 [ext_resource type="Texture2D" uid="uid://dxfn4gjr64rsc" path="res://assets/alpha topkick/frame0014.png" id="43_tesao"]
 [ext_resource type="Script" path="res://src/player/kickbox.gd" id="44_vl3yl"]
@@ -196,6 +199,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("39_j6a54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_e433k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_crfgl")
+}],
+"loop": false,
+"name": &"land",
 "speed": 5.0
 }, {
 "frames": [{
@@ -1944,6 +1961,115 @@ tracks/3/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_wrtwa"]
+resource_name = "right_lowkick"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"lowkick"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-10, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("KickBox:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(60, -10)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.22),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [false],
+"method": &"kick_toggle"
+}, {
+"args": [true],
+"method": &"kick_toggle"
+}, {
+"args": [false],
+"method": &"kick_toggle"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:is_kick_frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("KickBox/CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.16, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
 [sub_resource type="Animation" id="Animation_gkb08"]
 resource_name = "right_movebow"
 length = 0.24
@@ -2376,10 +2502,10 @@ tracks/8/keys = {
 "values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_wrtwa"]
-resource_name = "right_lowkick"
+[sub_resource type="Animation" id="Animation_nqbdl"]
+resource_name = "right_land"
 length = 0.3
-step = 0.01
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2390,7 +2516,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"lowkick"]
+"values": [&"land"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -2402,7 +2528,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-10, 0)]
+"values": [Vector2(0, -5)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -2411,78 +2537,75 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.16),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [0, 1]
+"values": [0, 1, 2]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("KickBox:position")
+tracks/3/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(60, -10)]
+"values": [false]
 }
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.22),
-"transitions": PackedFloat32Array(1, 1, 1),
-"values": [{
-"args": [false],
-"method": &"kick_toggle"
-}, {
-"args": [true],
-"method": &"kick_toggle"
-}, {
-"args": [false],
-"method": &"kick_toggle"
-}]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D:flip_h")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+
+[sub_resource type="Animation" id="Animation_0lknv"]
+resource_name = "left_land"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [&"land"]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath(".:is_kick_frame")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.16),
-"transitions": PackedFloat32Array(1, 1),
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false, true]
+"values": [Vector2(0, -5)]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("KickBox/CollisionShape2D:disabled")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.16, 0.21),
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true, false, true]
+"values": [0, 1, 2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7hivx"]
@@ -2495,6 +2618,7 @@ _data = {
 "left_idle": SubResource("Animation_p54kr"),
 "left_idlebow": SubResource("Animation_4fnhg"),
 "left_jump": SubResource("Animation_282v3"),
+"left_land": SubResource("Animation_0lknv"),
 "left_lowkick": SubResource("Animation_vh10b"),
 "left_movebow": SubResource("Animation_a1vdj"),
 "left_normalkick": SubResource("Animation_yjc0l"),
@@ -2508,6 +2632,7 @@ _data = {
 "right_idle": SubResource("Animation_1dl57"),
 "right_idlebow": SubResource("Animation_nulcp"),
 "right_jump": SubResource("Animation_2550v"),
+"right_land": SubResource("Animation_nqbdl"),
 "right_lowkick": SubResource("Animation_wrtwa"),
 "right_movebow": SubResource("Animation_gkb08"),
 "right_normalkick": SubResource("Animation_8d6rx"),
@@ -2608,6 +2733,19 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_fvxhl")
 blend_point_1/pos = -1.0
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3wqqp"]
+animation = &"right_land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cavgi"]
+animation = &"left_land"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_0jspj"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_3wqqp")
+blend_point_0/pos = 1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_cavgi")
+blend_point_1/pos = -1.0
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_io85a"]
 animation = &"right_lowkick"
 
@@ -2694,8 +2832,6 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_daemm"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p38vj"]
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_15wyb"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6f58u"]
@@ -2725,13 +2861,23 @@ blend_mode = 1
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l8afk"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sy46m"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bnuu7"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bacqs"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8vt6d"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_hsi1y"]
 states/End/position = Vector2(162, 265)
 states/Start/position = Vector2(162, 328.146)
 states/airbow/node = SubResource("AnimationNodeBlendSpace1D_0x25e")
 states/airbow/position = Vector2(878, 258.146)
 states/dash/node = SubResource("AnimationNodeBlendSpace1D_ayy2e")
-states/dash/position = Vector2(502, 217.146)
+states/dash/position = Vector2(500, 241.146)
 states/fall/node = SubResource("AnimationNodeBlendSpace1D_lrues")
 states/fall/position = Vector2(302, -197.854)
 states/highkick/node = SubResource("AnimationNodeBlendSpace1D_023rs")
@@ -2742,6 +2888,8 @@ states/idlebow/node = SubResource("AnimationNodeBlendSpace1D_1qmqq")
 states/idlebow/position = Vector2(878, 137.146)
 states/jump/node = SubResource("AnimationNodeBlendSpace1D_3sqf4")
 states/jump/position = Vector2(588, -197.854)
+states/land/node = SubResource("AnimationNodeBlendSpace1D_0jspj")
+states/land/position = Vector2(346, 104.059)
 states/lowkick/node = SubResource("AnimationNodeBlendSpace1D_854pu")
 states/lowkick/position = Vector2(872, -144.854)
 states/movebow/node = SubResource("AnimationNodeBlendSpace1D_u4n7p")
@@ -2754,8 +2902,8 @@ states/stagger/node = SubResource("AnimationNodeBlendSpace1D_sap3x")
 states/stagger/position = Vector2(1056, 82.146)
 states/topkick/node = SubResource("AnimationNodeBlendSpace1D_7b7re")
 states/topkick/position = Vector2(872, 26.146)
-transitions = ["idle", "run", SubResource("AnimationNodeStateMachineTransition_4rtns"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8swhw"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_qo8yy"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_daemm"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_p38vj"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_15wyb"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_6f58u"), "run", "dash", SubResource("AnimationNodeStateMachineTransition_n3x6o"), "idle", "dash", SubResource("AnimationNodeStateMachineTransition_8qvmp"), "dash", "idle", SubResource("AnimationNodeStateMachineTransition_37koq"), "dash", "run", SubResource("AnimationNodeStateMachineTransition_5xeb5"), "dash", "fall", SubResource("AnimationNodeStateMachineTransition_q1yrq"), "dash", "jump", SubResource("AnimationNodeStateMachineTransition_vygh8"), "fall", "dash", SubResource("AnimationNodeStateMachineTransition_dommd"), "jump", "dash", SubResource("AnimationNodeStateMachineTransition_8w1nl"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_ofphl"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_87raw"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_jipc3"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_l8afk")]
-graph_offset = Vector2(-43, -186.07)
+transitions = ["idle", "run", SubResource("AnimationNodeStateMachineTransition_4rtns"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8swhw"), "idle", "jump", SubResource("AnimationNodeStateMachineTransition_qo8yy"), "jump", "fall", SubResource("AnimationNodeStateMachineTransition_daemm"), "run", "jump", SubResource("AnimationNodeStateMachineTransition_15wyb"), "fall", "jump", SubResource("AnimationNodeStateMachineTransition_6f58u"), "run", "dash", SubResource("AnimationNodeStateMachineTransition_n3x6o"), "idle", "dash", SubResource("AnimationNodeStateMachineTransition_8qvmp"), "dash", "idle", SubResource("AnimationNodeStateMachineTransition_37koq"), "dash", "run", SubResource("AnimationNodeStateMachineTransition_5xeb5"), "dash", "fall", SubResource("AnimationNodeStateMachineTransition_q1yrq"), "dash", "jump", SubResource("AnimationNodeStateMachineTransition_vygh8"), "fall", "dash", SubResource("AnimationNodeStateMachineTransition_dommd"), "jump", "dash", SubResource("AnimationNodeStateMachineTransition_8w1nl"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_ofphl"), "run", "fall", SubResource("AnimationNodeStateMachineTransition_87raw"), "fall", "run", SubResource("AnimationNodeStateMachineTransition_jipc3"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_l8afk"), "fall", "land", SubResource("AnimationNodeStateMachineTransition_sy46m"), "land", "idle", SubResource("AnimationNodeStateMachineTransition_bnuu7"), "land", "dash", SubResource("AnimationNodeStateMachineTransition_bacqs"), "land", "run", SubResource("AnimationNodeStateMachineTransition_8vt6d")]
+graph_offset = Vector2(-43, 174.376)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xmax"]
 radius = 35.0
@@ -2992,6 +3140,7 @@ parameters/highkick/blend_position = 0
 parameters/idle/blend_position = 0.0
 parameters/idlebow/blend_position = 0
 parameters/jump/blend_position = 0
+parameters/land/blend_position = 0
 parameters/lowkick/blend_position = 0.993994
 parameters/movebow/blend_position = 0
 parameters/normalkick/blend_position = 0
