@@ -72,6 +72,7 @@ down={
 2d_physics/layer_6="enemyprojectiles"
 2d_physics/layer_7="generalhazards"
 2d_physics/layer_8="playerhazards"
+2d_physics/layer_9="enemyparry"
 
 [rendering]
 
