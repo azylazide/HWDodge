@@ -31,9 +31,7 @@ func state_enter() -> void:
 
 	elif machine.partner.current_state == bow:
 		# small step back
-		if machine.previous_state == idle:
-			player.velocity.x = -player.face_direction*200
-		elif machine.previous_state in [run,gdash]:
+		if machine.previous_state in [run,gdash]:
 			if abs(player.velocity.x) > 0:
 				player.velocity.x = -player.face_direction*300
 		# apply residual motion
