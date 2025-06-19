@@ -18,58 +18,37 @@ class_name PlayerKick
 # actively attacking
 var is_attacking:= false
 var prev_attack: StringName = &""
+var kick_charged:= false
 
 func state_enter() -> void:
 	super()
 	prev_attack = &""
 
+	if not kick_charged:
+		player.kick_commit_timer.start()
+	else:
+		machine.partner.change_state(nonestate)
+		kick_logic()
+		kick_charged = false
+
 func state_physics(delta: float) -> State:
 	return null
 
 func state_input(event: InputEvent) -> State:
+
 	if event.is_action_released("kick") and not is_attacking:
 		# movement states immediately transition
 		# movement states to check are previous
 		machine.partner.change_state(nonestate)
-
-		if machine.partner.previous_state in [idle,run]:
-			if player.down_buffer:
-				is_attacking = true
-				player.anim_sm.travel(&"lowkick")
-				player.reset_kick_timer()
-				prev_attack = &"lowkick"
-			else:
-				# highkick from buffer after gdash
-				if not player.high_kick_buffer_timer.is_stopped():
-					is_attacking = true
-					player.anim_sm.travel(&"highkick")
-					player.reset_kick_timer()
-					prev_attack = &"highkick"
-				else:
-					is_attacking = true
-					player.anim_sm.travel(&"normalkick")
-					prev_attack = &"normalkick"
-		elif machine.partner.previous_state in [jump,fall,gdash]:
-			# topkick from buffer after ajump or adash
-			if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
-				is_attacking = true
-				player.anim_sm.travel(&"topkick")
-				player.reset_kick_timer()
-				prev_attack = &"topkick"
-			else:
-				is_attacking = true
-				player.anim_sm.travel(&"highkick")
-				prev_attack = &"highkick"
-		elif machine.partner.previous_state in [ajump,adash]:
-			is_attacking = true
-			player.anim_sm.travel(&"topkick")
-			prev_attack = &"topkick"
+		kick_logic()
+		kick_charged = false
 
 	return null
 
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"left_lowkick",&"left_normalkick",&"right_lowkick",&"right_normalkick"]:
-		machine.partner.change_state(machine.partner.previous_state)
+		#FIXME Weird move nonestate happening twice after kick animation for instant release; fixed currently by preventing double nonestate transition
+		machine.partner.change_state(machine.partner.previous_state if not machine.partner.previous_state == nonestate else fall)
 		return neutral
 	elif anim_name in [&"left_highkick",&"left_topkick",&"right_highkick",&"right_topkick"]:
 		machine.partner.change_state(fall)
@@ -81,8 +60,46 @@ func state_interrupt(message: String) -> State:
 		player.is_kick_frame = false
 		player.is_kick_connected = false
 		return stagger
+	elif message == "initial_commit":
+		machine.partner.change_state(nonestate)
+		kick_logic()
+		kick_charged = true
 	return null
 
 func state_exit() -> void:
 	is_attacking = false
 	player.kick_cooldown_timer.start()
+
+func kick_logic() -> void:
+	if machine.partner.previous_state in [idle,run]:
+		if player.down_buffer:
+			is_attacking = true
+			player.anim_sm.travel(&"lowkick")
+			player.reset_kick_timer()
+			prev_attack = &"lowkick"
+		else:
+			# highkick from buffer after gdash
+			if not player.high_kick_buffer_timer.is_stopped():
+				is_attacking = true
+				player.anim_sm.travel(&"highkick")
+				player.reset_kick_timer()
+				prev_attack = &"highkick"
+			else:
+				is_attacking = true
+				player.anim_sm.travel(&"normalkick")
+				prev_attack = &"normalkick"
+	elif machine.partner.previous_state in [jump,fall,gdash]:
+		# topkick from buffer after ajump or adash
+		if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
+			is_attacking = true
+			player.anim_sm.travel(&"topkick")
+			player.reset_kick_timer()
+			prev_attack = &"topkick"
+		else:
+			is_attacking = true
+			player.anim_sm.travel(&"highkick")
+			prev_attack = &"highkick"
+	elif machine.partner.previous_state in [ajump,adash]:
+		is_attacking = true
+		player.anim_sm.travel(&"topkick")
+		prev_attack = &"topkick"

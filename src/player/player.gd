@@ -69,6 +69,8 @@ var down_buffer:= false
 
 var is_kick_connected:= false
 
+var is_kick_charged:= false
+
 var is_inside_enemy_hazard:= false
 
 var is_invincible:= false
@@ -162,6 +164,8 @@ func _setup_timers() -> void:
 	kick_cooldown_timer.wait_time = platformer_settings.kick_cooldown_time
 	high_kick_buffer_timer.wait_time = platformer_settings.high_kick_buffer_time
 	top_kick_buffer_timer.wait_time = platformer_settings.top_kick_buffer_time
+	kick_commit_timer.wait_time = platformer_settings.kick_commit_time
+	kick_commit_timer.timeout.connect(kick_committed)
 
 	bow_cooldown_timer.wait_time = platformer_settings.bow_cooldown_time
 
@@ -271,6 +275,10 @@ func kick_toggle(toggle: bool) -> void:
 	#kick_box.set_monitorable.call_deferred(toggle)
 	#kick_box.set_monitoring.call_deferred(toggle)
 	pass
+
+## Kick commited after timer stops and does kick, holding kick will charge kick
+func kick_committed() -> void:
+	action_sm.machine_interrupt("initial_commit")
 
 ## Bow charge check controlled by animation to determine if currently in charge frames of the animation
 func bow_charge_check(check: bool) -> void:
