@@ -24,27 +24,47 @@ func state_enter() -> void:
 	super()
 	prev_attack = &""
 
+	# movement states immediately transition
+	# movement states to check are previous
+	machine.partner.change_state(nonestate)
+
+	if machine.partner.previous_state == idle:
+		is_attacking = true
+		player.anim_sm.travel(&"idlebow")
+		prev_attack = &"idlebow"
+	elif machine.partner.previous_state in [run,gdash]:
+		is_attacking = true
+		player.anim_sm.travel(&"movebow")
+		prev_attack = &"movebow"
+	elif machine.partner.previous_state in [fall,jump,ajump,adash]:
+		is_attacking = true
+		player.anim_sm.travel(&"airbow")
+		prev_attack = &"airbow"
+
+	player.is_bow_hold_charged = false
+
+
 func state_physics(delta: float) -> State:
 	return null
 
 func state_input(event: InputEvent) -> State:
-	if event.is_action_released("bow") and not is_attacking:
+	#if event.is_action_released("bow") and not is_attacking:
 		# movement states immediately transition
 		# movement states to check are previous
-		machine.partner.change_state(nonestate)
-
-		if machine.partner.previous_state == idle:
-			is_attacking = true
-			player.anim_sm.travel(&"idlebow")
-			prev_attack = &"idlebow"
-		elif machine.partner.previous_state in [run,gdash]:
-			is_attacking = true
-			player.anim_sm.travel(&"movebow")
-			prev_attack = &"movebow"
-		elif machine.partner.previous_state in [fall,jump,ajump,adash]:
-			is_attacking = true
-			player.anim_sm.travel(&"airbow")
-			prev_attack = &"airbow"
+		#machine.partner.change_state(nonestate)
+#
+		#if machine.partner.previous_state == idle:
+			#is_attacking = true
+			#player.anim_sm.travel(&"idlebow")
+			#prev_attack = &"idlebow"
+		#elif machine.partner.previous_state in [run,gdash]:
+			#is_attacking = true
+			#player.anim_sm.travel(&"movebow")
+			#prev_attack = &"movebow"
+		#elif machine.partner.previous_state in [fall,jump,ajump,adash]:
+			#is_attacking = true
+			#player.anim_sm.travel(&"airbow")
+			#prev_attack = &"airbow"
 		#elif machine.partner.previous_state in [jump,fall,gdash]:
 			## topkick from buffer after ajump or adash
 			#if machine.partner.previous_state == fall and not player.top_kick_buffer_timer.is_stopped():
@@ -84,4 +104,7 @@ func state_interrupt(message: String) -> State:
 func state_exit() -> void:
 	is_attacking = false
 	player.bow_cooldown_timer.start()
+
+	if Input.is_action_pressed("bow"):
+		player.bow_charge_timer.start()
 	pass

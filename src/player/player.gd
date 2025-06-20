@@ -71,6 +71,8 @@ var is_kick_connected:= false
 
 var is_kick_charged:= false
 
+var is_bow_hold_charged:= false
+
 var is_inside_enemy_hazard:= false
 
 var is_invincible:= false
@@ -111,6 +113,8 @@ var additional_velocity:= Vector2.ZERO
 @onready var top_kick_buffer_timer: Timer = $Timers/TopKickBufferTimer
 
 @onready var bow_cooldown_timer: Timer = $Timers/BowCooldownTimer
+
+@onready var bow_charge_timer: Timer = $Timers/BowChargeTimer
 
 @onready var invincibility_timer: Timer = $Timers/InvincibilityTimer
 
@@ -172,6 +176,8 @@ func _setup_timers() -> void:
 	kick_charge_timer.timeout.connect(func(): is_kick_charged = true)
 
 	bow_cooldown_timer.wait_time = platformer_settings.bow_cooldown_time
+	bow_charge_timer.wait_time = platformer_settings.bow_charge_time
+	bow_charge_timer.timeout.connect(func(): is_bow_hold_charged = true)
 
 	invincibility_timer.timeout.connect(invincible_reset)
 	invincibility_timer.wait_time = platformer_settings.invincibility_time
@@ -321,4 +327,4 @@ func debug_info() -> void:
 	DebugInfo.display_movement_state(movement_sm)
 	DebugInfo.display_action_state(action_sm)
 	DebugInfo.display_animation(anim_sm)
-	DebugInfo.display_timers([bow_cooldown_timer,invincibility_timer,kick_cooldown_timer,kick_charge_timer])
+	DebugInfo.display_timers([bow_cooldown_timer,bow_charge_timer,invincibility_timer,kick_cooldown_timer,kick_charge_timer])

@@ -43,6 +43,8 @@ class_name  PlatformerResource
 
 @export var bow_cooldown_time:= 0.12
 
+@export var bow_charge_time:= 0.8
+
 @export_subgroup("Other")
 
 @export var invincibility_time:= 4.0

@@ -30,6 +30,10 @@ func state_input(event: InputEvent) -> State:
 	if event.is_action_pressed("bow") and player.bow_cooldown_timer.is_stopped():
 		return bow
 
+	if event.is_action_released("bow") and player.bow_cooldown_timer.is_stopped():
+		if player.is_bow_hold_charged:
+			return bow
+
 	return null
 
 func state_interrupt(message: String) -> State:
