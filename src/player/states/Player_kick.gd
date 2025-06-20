@@ -18,18 +18,24 @@ class_name PlayerKick
 # actively attacking
 var is_attacking:= false
 var prev_attack: StringName = &""
-var kick_charged:= false
 
 func state_enter() -> void:
 	super()
 	prev_attack = &""
 
-	if not kick_charged:
+	print_debug("KICK ENTER")
+	print_stack()
+
+	if not player.is_kick_charged:
 		player.kick_commit_timer.start()
 	else:
+		printt("0a",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
 		machine.partner.change_state(nonestate)
+		printt("0b",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
 		kick_logic()
-		kick_charged = false
+		player.is_kick_charged = false
 
 func state_physics(delta: float) -> State:
 	return null
@@ -39,16 +45,24 @@ func state_input(event: InputEvent) -> State:
 	if event.is_action_released("kick") and not is_attacking:
 		# movement states immediately transition
 		# movement states to check are previous
+		printt("1a",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
 		machine.partner.change_state(nonestate)
+		printt("1b",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
 		kick_logic()
-		kick_charged = false
+		player.is_kick_charged = false
 
 	return null
 
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"left_lowkick",&"left_normalkick",&"right_lowkick",&"right_normalkick"]:
 		#FIXME Weird move nonestate happening twice after kick animation for instant release; fixed currently by preventing double nonestate transition
-		machine.partner.change_state(machine.partner.previous_state if not machine.partner.previous_state == nonestate else fall)
+		printt("2a",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
+		machine.partner.change_state(machine.partner.previous_state) #if not machine.partner.previous_state == nonestate else fall
+		printt("2b",machine.partner.previous_state,machine.partner.current_state)
+		print_debug()
 		return neutral
 	elif anim_name in [&"left_highkick",&"left_topkick",&"right_highkick",&"right_topkick"]:
 		machine.partner.change_state(fall)
@@ -63,7 +77,7 @@ func state_interrupt(message: String) -> State:
 	elif message == "initial_commit":
 		machine.partner.change_state(nonestate)
 		kick_logic()
-		kick_charged = true
+		player.is_kick_charged = true
 	return null
 
 func state_exit() -> void:

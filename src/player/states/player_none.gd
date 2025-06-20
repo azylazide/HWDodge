@@ -19,6 +19,9 @@ func state_enter() -> void:
 	# kick state controlled enter
 	# apply residual motions
 	if machine.partner.current_state == kick:
+		print("NONE STATE KICK ENTER")
+		print_stack()
+
 		if machine.previous_state in [jump,fall]:
 			player.velocity.y = 0
 			if abs(player.velocity.x) > 0:
@@ -104,6 +107,8 @@ func state_exit() -> void:
 		player.velocity.y = maxf(player.velocity.y,0)
 
 	elif machine.partner.current_state == kick:
+		print("NONE STATE KICK EXIT")
+
 		player.is_kick_connected = false
 
 func state_animated(anim_name: StringName) -> State:

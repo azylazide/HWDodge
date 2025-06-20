@@ -27,7 +27,9 @@ class_name  PlatformerResource
 
 @export var kick_cooldown_time:= 0.35
 
-@export var kick_commit_time:= 0.12
+@export var kick_commit_time:= 0.05
+
+@export var kick_charge_time:= 0.8
 
 @export var low_kick_buffer_time:= 0.12
 

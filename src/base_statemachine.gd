@@ -39,6 +39,7 @@ func machine_physics(delta: float) -> void:
 	change_state(new_state)
 
 func machine_input(event: InputEvent) -> void:
+	print_debug(event)
 	if not is_instance_valid(current_state):
 		return
 

@@ -23,8 +23,11 @@ func state_input(event: InputEvent) -> State:
 	if event.is_action_pressed("kick") and player.kick_cooldown_timer.is_stopped():
 		return kick
 
-	if event.is_action_released("kick") and player.kick_cooldown_timer.is_stopped():
-		return kick
+	if event.is_action_released("kick"):
+		if player.kick_cooldown_timer.is_stopped():
+			return kick
+		else:
+			player.is_kick_charged = false
 
 	if event.is_action_pressed("bow") and player.bow_cooldown_timer.is_stopped():
 		return bow

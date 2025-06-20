@@ -78,7 +78,8 @@ dash_cooldown_time = 0.2
 dash_length = 4.0
 dash_buffer_max = 10.0
 kick_cooldown_time = 0.35
-kick_commit_time = 0.12
+kick_commit_time = 0.05
+kick_charge_time = 0.8
 low_kick_buffer_time = 0.12
 high_kick_buffer_time = 0.1
 top_kick_buffer_time = 0.1
@@ -3150,6 +3151,11 @@ process_callback = 0
 one_shot = true
 
 [node name="KickCommitTimer" type="Timer" parent="Timers"]
+process_callback = 0
+wait_time = 0.12
+one_shot = true
+
+[node name="KickChargeTimer" type="Timer" parent="Timers"]
 process_callback = 0
 wait_time = 0.12
 one_shot = true
