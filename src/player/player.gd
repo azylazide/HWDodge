@@ -169,6 +169,7 @@ func _setup_timers() -> void:
 	kick_commit_timer.wait_time = platformer_settings.kick_commit_time
 	kick_commit_timer.timeout.connect(kick_committed)
 	kick_charge_timer.wait_time = platformer_settings.kick_charge_time
+	kick_charge_timer.timeout.connect(func(): is_kick_charged = true)
 
 	bow_cooldown_timer.wait_time = platformer_settings.bow_cooldown_time
 

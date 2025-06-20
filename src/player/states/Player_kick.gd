@@ -26,32 +26,38 @@ func state_enter() -> void:
 	print_debug("KICK ENTER")
 	print_stack()
 
-	if not player.is_kick_charged:
-		player.kick_commit_timer.start()
-	else:
-		printt("0a",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
-		machine.partner.change_state(nonestate)
-		printt("0b",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
-		kick_logic()
-		player.is_kick_charged = false
+	## movement states immediately transition
+	## movement states to check are previous
+	machine.partner.change_state(nonestate)
+	kick_logic()
+	player.is_kick_charged = false
+
+	#if not player.is_kick_charged:
+		#player.kick_commit_timer.start()
+	#else:
+		#printt("0a",machine.partner.previous_state,machine.partner.current_state)
+		#print_debug()
+		#machine.partner.change_state(nonestate)
+		#printt("0b",machine.partner.previous_state,machine.partner.current_state)
+		#print_debug()
+		#kick_logic()
+		#player.is_kick_charged = false
 
 func state_physics(delta: float) -> State:
 	return null
 
 func state_input(event: InputEvent) -> State:
 
-	if event.is_action_released("kick") and not is_attacking:
-		# movement states immediately transition
-		# movement states to check are previous
-		printt("1a",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
-		machine.partner.change_state(nonestate)
-		printt("1b",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
-		kick_logic()
-		player.is_kick_charged = false
+	#if event.is_action_released("kick") and not is_attacking:
+		## movement states immediately transition
+		## movement states to check are previous
+		#printt("1a",machine.partner.previous_state,machine.partner.current_state)
+		#print_debug()
+		#machine.partner.change_state(nonestate)
+		#printt("1b",machine.partner.previous_state,machine.partner.current_state)
+		#print_debug()
+		#kick_logic()
+		#player.is_kick_charged = false
 
 	return null
 
@@ -75,14 +81,18 @@ func state_interrupt(message: String) -> State:
 		player.is_kick_connected = false
 		return stagger
 	elif message == "initial_commit":
-		machine.partner.change_state(nonestate)
-		kick_logic()
-		player.is_kick_charged = true
+		#machine.partner.change_state(nonestate)
+		#kick_logic()
+		#player.is_kick_charged = true
+		pass
 	return null
 
 func state_exit() -> void:
 	is_attacking = false
 	player.kick_cooldown_timer.start()
+
+	if Input.is_action_pressed("kick"):
+		player.is_kick_charged = true
 
 func kick_logic() -> void:
 	if machine.partner.previous_state in [idle,run]:
