@@ -11,6 +11,8 @@ func state_enter() -> void:
 	player.anim_sm.travel(&"stagger")
 	player.is_invincible = true
 	machine.partner.change_state(nonestate)
+	player.kick_charge_timer.stop()
+	player.is_kick_charged = false
 
 func state_animated(anim_name: StringName) -> State:
 	player.invincibility_timer.start()

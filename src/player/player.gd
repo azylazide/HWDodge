@@ -321,4 +321,4 @@ func debug_info() -> void:
 	DebugInfo.display_movement_state(movement_sm)
 	DebugInfo.display_action_state(action_sm)
 	DebugInfo.display_animation(anim_sm)
-	DebugInfo.display_timers([bow_cooldown_timer,invincibility_timer])
+	DebugInfo.display_timers([bow_cooldown_timer,invincibility_timer,kick_cooldown_timer,kick_charge_timer])

@@ -40,6 +40,6 @@ func display_timers(timers: Array[Timer]) -> void:
 
 	var placement_string = ""
 	for i in format.size()/2:
-		placement_string = placement_string+"%s:%0.2f"+"\n"
+		placement_string = placement_string+"%s:%0.5f"+"\n"
 
 	timer_labels.text = "Timers: Time Remaining\n"+placement_string % format

@@ -23,9 +23,6 @@ func state_enter() -> void:
 	super()
 	prev_attack = &""
 
-	print_debug("KICK ENTER")
-	print_stack()
-
 	## movement states immediately transition
 	## movement states to check are previous
 	machine.partner.change_state(nonestate)
@@ -63,12 +60,7 @@ func state_input(event: InputEvent) -> State:
 
 func state_animated(anim_name: StringName) -> State:
 	if anim_name in [&"left_lowkick",&"left_normalkick",&"right_lowkick",&"right_normalkick"]:
-		#FIXME Weird move nonestate happening twice after kick animation for instant release; fixed currently by preventing double nonestate transition
-		printt("2a",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
-		machine.partner.change_state(machine.partner.previous_state) #if not machine.partner.previous_state == nonestate else fall
-		printt("2b",machine.partner.previous_state,machine.partner.current_state)
-		print_debug()
+		machine.partner.change_state(machine.partner.previous_state)
 		return neutral
 	elif anim_name in [&"left_highkick",&"left_topkick",&"right_highkick",&"right_topkick"]:
 		machine.partner.change_state(fall)
