@@ -92,7 +92,7 @@ func state_exit() -> void:
 	player.kick_cooldown_timer.start()
 
 	if Input.is_action_pressed("kick"):
-		player.is_kick_charged = true
+		player.kick_charge_timer.start()
 
 func kick_logic() -> void:
 	if machine.partner.previous_state in [idle,run]:
